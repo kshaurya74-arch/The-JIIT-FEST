@@ -1,0 +1,2058 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JIIT FEST "IMPRESSIONS" | 2026</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;500;600;700&family=Share+Tech+Mono&family=Patrick+Hand&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bg: "#050505", 
+                        primary: "#ff00d4",    /* Hot Neon Pink */
+                        secondary: "#9d00ff", /* Electric Purple */
+                        accent: "#00f7ff",    /* Cyber Cyan */
+                        robo: "#00e5ff",      /* Robotic Blue */
+                        darkrobo: "#001a20",
+                        halogen: "#ffaa00",   /* Industrial Yellow */
+                        glass: "rgba(255, 255, 255, 0.05)",
+                        alert: "#ff003c",
+                        paper: "#fdf6e3",
+                        'neon-blue': '#00f3ff',
+                        'neon-pink': '#ff00ff',
+                        'neon-purple': '#bc13fe',
+                        'neon-gold': '#ffd700',
+                        'neon-green': '#0aff0a',
+                        'neon-red': '#ff003c'
+                    },
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        body: ['Rajdhani', 'sans-serif'],
+                        mono: ['Share Tech Mono', 'monospace'], 
+                        hand: ['Patrick Hand', 'cursive'],
+                        marker: ['Permanent Marker', 'cursive'],
+                    },
+                    animation: {
+                        'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'spin-slow': 'spin 10s linear infinite',
+                        'scan': 'scan 2s linear infinite',
+                        'scroll': 'scroll 20s linear infinite', 
+                        'wiggle': 'wiggle 1s ease-in-out infinite',
+                        'flash-green': 'flashGreen 1s infinite alternate',
+                        'stripe-flow': 'stripeFlow 1s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        scan: {
+                            '0%': { transform: 'translateY(-100%)' },
+                            '100%': { transform: 'translateY(100%)' }
+                        },
+                        scroll: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-50%)' } 
+                        },
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' },
+                        },
+                        flashGreen: {
+                            '0%': { boxShadow: '0 0 10px #00ff00', transform: 'scale(1)' },
+                            '100%': { boxShadow: '0 0 30px #00ff00, 0 0 10px #ffffff', transform: 'scale(1.05)' }
+                        },
+                        stripeFlow: {
+                            '0%': { backgroundPosition: '0 0' },
+                            '100%': { backgroundPosition: '30px 0' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* --- GLOBAL VARIABLES --- */
+        :root {
+            --neon-blue: #00f3ff;
+            --neon-pink: #ff00ff;
+            --neon-purple: #bc13fe;
+            --neon-gold: #ffd700;
+            --neon-green: #0aff0a;
+            --neon-red: #ff003c;
+        }
+        body { background-color: #050505; color: white; overflow-x: hidden; }
+
+        /* --- BACKGROUND LAYERS --- */
+        #bg-video-wrapper { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            z-index: -50; overflow: hidden; opacity: 0; transition: opacity 3s ease-in; 
+        }
+        #bg-video { width: 100vw; height: 100vh; object-fit: cover; }
+        .video-overlay {
+            position: absolute; inset: 0; 
+            background: linear-gradient(to bottom, rgba(0,0,0,0.85), rgba(0,0,0,0.75), rgba(0,0,0,0.95));
+            z-index: 1;
+        }
+
+        .cyber-grid { 
+            position: fixed; bottom: -30%; left: -50%; width: 200%; height: 120%; 
+            background-image: linear-gradient(rgba(0, 247, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 247, 255, 0.1) 1px, transparent 1px); 
+            background-size: 60px 60px; transform: perspective(500px) rotateX(60deg); 
+            mask-image: linear-gradient(to top, black, transparent 90%); 
+            z-index: -10; animation: gridMove 20s linear infinite; pointer-events: none;
+        }
+        @keyframes gridMove { from { transform: perspective(500px) rotateX(60deg) translateY(0); } to { transform: perspective(500px) rotateX(60deg) translateY(60px); } }
+
+        /* --- INTRO SEQUENCE OVERLAY --- */
+        #intro-overlay {
+            position: fixed; inset: 0; background: black; z-index: 10000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .intro-vid-fullscreen {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; display: none; 
+        }
+        #loading-text-container { display: none !important; }
+        #start-screen-content { z-index: 20; text-align: center; width: 100%; }
+        
+        .start-trigger-container { cursor: pointer; transition: all 0.5s ease; }
+        .start-trigger-container:hover { transform: scale(1.05); }
+        .start-logo-glow { box-shadow: 0 0 50px var(--neon-blue); animation: pulse-glow 3s infinite; }
+        @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 30px var(--neon-blue); } 50% { box-shadow: 0 0 60px var(--neon-blue), 0 0 20px var(--neon-pink); } }
+
+        /* --- NAVBAR --- */
+        nav { backdrop-filter: blur(15px); background: rgba(5, 5, 5, 0.7); border-bottom: 1px solid rgba(255, 255, 255, 0.05); z-index: 100; }
+        
+        /* MOBILE MENU OVERLAY */
+        #mobile-menu {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 90;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 2rem; transform: translateX(100%); transition: transform 0.3s ease-in-out;
+        }
+        #mobile-menu.open { transform: translateX(0); }
+        #mobile-menu a { font-family: 'Orbitron'; font-size: 1.5rem; color: white; letter-spacing: 2px; }
+        #mobile-menu a:hover { color: var(--accent); }
+
+        .music-toggle-btn {
+            position: fixed; top: 20px; right: 20px; z-index: 150;
+            width: 40px; height: 40px; border-radius: 50%;
+            background: rgba(0,0,0,0.6); border: 2px solid var(--neon-blue); color: var(--neon-blue);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.3s; box-shadow: 0 0 10px var(--neon-blue);
+        }
+        .music-toggle-btn:hover { background: var(--neon-blue); color: black; box-shadow: 0 0 25px var(--neon-blue); transform: scale(1.1); }
+        .music-toggle-btn.muted { border-color: gray; color: gray; box-shadow: none; }
+        @media(max-width: 768px) { 
+            .music-toggle-btn { top: 15px; right: 60px; width: 35px; height: 35px; font-size: 0.8rem; } 
+        }
+
+        .tech-card { 
+            background: rgba(10, 10, 15, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(10px); transition: all 0.3s ease; 
+        }
+        .tech-card:hover { border-color: rgba(0, 247, 255, 0.4); box-shadow: 0 0 25px rgba(0, 247, 255, 0.1); transform: translateY(-2px); }
+        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- COUNTDOWN STYLES --- */
+        .countdown-intro-text {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 500;
+            font-size: 1.2rem;
+            color: var(--neon-pink);
+            text-shadow: 0 0 5px var(--neon-pink), 0 0 15px var(--accent);
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        .countdown-box {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: rgba(0, 247, 255, 0.05); border: 1px solid var(--neon-blue);
+            padding: 1rem 1.5rem; border-radius: 8px; backdrop-filter: blur(5px);
+            box-shadow: 0 0 15px rgba(0, 247, 255, 0.1); min-width: 100px;
+            position: relative; overflow: hidden; margin: 10px;
+            transition: transform 0.3s ease;
+        }
+        .countdown-box:hover { transform: translateY(-5px); box-shadow: 0 0 25px rgba(0, 247, 255, 0.4); }
+        .countdown-box::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+            background: var(--neon-blue); box-shadow: 0 0 10px var(--neon-blue);
+            animation: scan 2s linear infinite;
+        }
+        .countdown-box span {
+            font-family: 'Orbitron', sans-serif; font-size: 2.5rem; font-weight: 700;
+            color: white; text-shadow: 0 0 10px var(--neon-blue);
+        }
+        .countdown-box label {
+            font-family: 'Share Tech Mono', monospace; font-size: 0.8rem; color: var(--accent);
+            letter-spacing: 2px; margin-top: 0.5rem;
+        }
+        @media(max-width: 768px) {
+            .countdown-intro-text { font-size: 1rem; letter-spacing: 1px; }
+            .countdown-box { padding: 0.5rem 0.5rem; min-width: 70px; margin: 5px; }
+            .countdown-box span { font-size: 1.5rem; }
+            .countdown-box label { font-size: 0.6rem; }
+        }
+
+        /* --- TECH LEADERBOARD STYLES --- */
+        .tech-leaderboard {
+            background: rgba(5, 5, 10, 0.9);
+            border: 1px solid var(--neon-blue);
+            box-shadow: 0 0 30px rgba(0, 247, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        .tech-leaderboard::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(0deg, transparent 24%, rgba(0, 247, 255, 0.05) 25%, rgba(0, 247, 255, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 247, 255, 0.05) 75%, rgba(0, 247, 255, 0.05) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(0, 247, 255, 0.05) 25%, rgba(0, 247, 255, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 247, 255, 0.05) 75%, rgba(0, 247, 255, 0.05) 76%, transparent 77%, transparent);
+            background-size: 30px 30px;
+            pointer-events: none;
+        }
+        .tech-leaderboard-header {
+            background: rgba(0, 247, 255, 0.1);
+            padding: 15px;
+            border-bottom: 1px solid var(--neon-blue);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .tech-rank-row {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+            position: relative;
+        }
+        .tech-rank-row:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: scale(1.02);
+        }
+        .tech-rank-row:last-child { border-bottom: none; }
+        
+        .rank-num {
+            font-family: 'Orbitron';
+            font-size: 1.5rem;
+            font-weight: bold;
+            width: 40px;
+            margin-right: 15px;
+            text-align: center;
+        }
+        .rank-1 { color: #FFD700; text-shadow: 0 0 10px #FFD700; }
+        .rank-2 { color: #C0C0C0; text-shadow: 0 0 10px #C0C0C0; }
+        .rank-3 { color: #CD7F32; text-shadow: 0 0 10px #CD7F32; }
+        
+        .rank-bar {
+            flex-grow: 1;
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            margin: 0 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        .rank-fill { height: 100%; border-radius: 4px; position: relative; }
+        .rank-fill::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            animation: shine 2s infinite;
+        }
+        @keyframes shine { from { left: -100%; } to { left: 100%; } }
+
+        /* --- VOTING SECTION (NEW RICH UI) --- */
+        .vote-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            width: 100%;
+            max-width: 350px;
+            /* 3D Tilt */
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+        }
+        .vote-card.team-blue { border-color: var(--neon-blue); box-shadow: 0 0 15px rgba(0, 247, 255, 0.1), inset 0 0 20px rgba(0, 247, 255, 0.05); }
+        .vote-card.team-pink { border-color: var(--neon-pink); box-shadow: 0 0 15px rgba(255, 0, 255, 0.1), inset 0 0 20px rgba(255, 0, 255, 0.05); }
+        
+        .vote-card:hover { transform: translateY(-5px) scale(1.03); z-index: 10; }
+        .vote-card.team-blue:hover { box-shadow: 0 0 30px var(--neon-blue); }
+        .vote-card.team-pink:hover { box-shadow: 0 0 30px var(--neon-pink); }
+
+        .vote-btn {
+            position: relative;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 12px 0;
+            width: 100%;
+            border: none;
+            cursor: pointer;
+            clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+        .vote-btn-blue { background: rgba(0, 247, 255, 0.1); color: var(--neon-blue); border: 1px solid var(--neon-blue); }
+        .vote-btn-blue:hover { background: var(--neon-blue); color: black; box-shadow: 0 0 20px var(--neon-blue); }
+        
+        .vote-btn-pink { background: rgba(255, 0, 255, 0.1); color: var(--neon-pink); border: 1px solid var(--neon-pink); }
+        .vote-btn-pink:hover { background: var(--neon-pink); color: black; box-shadow: 0 0 20px var(--neon-pink); }
+
+        .vs-badge {
+            width: 60px; height: 60px;
+            background: black;
+            border: 2px solid white;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Orbitron'; font-weight: 900; font-style: italic;
+            position: relative;
+            z-index: 20;
+            box-shadow: 0 0 20px white;
+            animation: pulse-fast 1s infinite;
+        }
+        .vs-badge::before {
+            content: ''; position: absolute; inset: -5px; border-radius: 50%;
+            border: 2px dashed rgba(255,255,255,0.5);
+            animation: spin-slow 4s linear infinite;
+        }
+
+        .progress-striped {
+            background-image: linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+            background-size: 1rem 1rem;
+            animation: stripe-flow 1s linear infinite;
+        }
+
+        /* Float +1 Animation */
+        .float-plus-one {
+            position: absolute;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.5rem;
+            pointer-events: none;
+            animation: floatUp 1s ease-out forwards;
+            text-shadow: 0 0 10px currentColor;
+            z-index: 100;
+        }
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-50px) scale(1.5); }
+        }
+
+        /* --- CYBER TOAST NOTIFICATIONS (Replaces Alerts) --- */
+        #toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px; 
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none; 
+        }
+
+        .cyber-toast {
+            background: rgba(5, 5, 10, 0.95);
+            border-left: 4px solid var(--neon-blue);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            border-right: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            padding: 15px 25px;
+            min-width: 300px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            box-shadow: 0 0 15px rgba(0, 247, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            pointer-events: auto;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 95% 100%, 0 100%);
+        }
+
+        .cyber-toast.show { opacity: 1; transform: translateX(0); }
+        .cyber-toast.success { border-left-color: var(--neon-green); box-shadow: 0 0 15px rgba(10, 255, 10, 0.2); }
+        .cyber-toast.error { border-left-color: var(--neon-red); box-shadow: 0 0 15px rgba(255, 0, 60, 0.2); }
+        .cyber-toast.warning { border-left-color: var(--neon-gold); box-shadow: 0 0 15px rgba(255, 215, 0, 0.2); }
+
+        .toast-icon { font-size: 1.2rem; margin-right: 15px; }
+
+        /* --- TIMELINE --- */
+        #schedule { position: relative; overflow: hidden; }
+        #schedule::before {
+            content: ''; position: absolute; top: 0; left: 50%; width: 4px; height: 100%;
+            background: linear-gradient(to bottom, transparent, var(--neon-blue), var(--neon-pink), transparent);
+            transform: translateX(-50%); box-shadow: 0 0 20px var(--neon-blue); z-index: 0;
+        }
+        .timeline-day-header { position: relative; z-index: 20; text-align: center; margin: 4rem 0; }
+        .timeline-day-header span {
+            display: inline-block; padding: 0.5rem 2rem; background: rgba(0,0,0,0.8);
+            border: 2px solid var(--accent); color: var(--accent); font-family: 'Orbitron';
+            font-weight: bold; letter-spacing: 2px; box-shadow: 0 0 20px var(--accent); transform: skew(-10deg);
+        }
+        .timeline-item { position: relative; width: 100%; margin-bottom: 4rem; z-index: 10; display: flex; justify-content: center; align-items: center; }
+        .timeline-beacon { position: absolute; left: 50%; width: 24px; height: 24px; background: #000; border: 3px solid var(--neon-blue); border-radius: 50%; transform: translateX(-50%); z-index: 15; box-shadow: 0 0 15px var(--neon-blue), inset 0 0 10px var(--neon-blue); }
+        .timeline-beacon::after { content: ''; position: absolute; inset: -6px; border-radius: 50%; border: 2px solid var(--neon-blue); opacity: 0; animation: pulseRing 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulseRing { 0% { transform: scale(0.8); opacity: 1; } 100% { transform: scale(1.5); opacity: 0; } }
+        .timeline-card { width: 45%; background: rgba(10, 10, 15, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); padding: 2rem; position: relative; transition: all 0.4s ease; clip-path: polygon(5% 0%, 100% 0%, 100% 90%, 95% 100%, 0% 100%, 0% 10%); }
+        .timeline-card:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 0 30px rgba(0, 247, 255, 0.2); }
+        .timeline-item:nth-child(even) .timeline-card { margin-right: auto; margin-left: 0; border-left: 4px solid var(--neon-blue); }
+        .timeline-item:nth-child(even) .timeline-card::before { right: -50px; }
+        .timeline-item:nth-child(odd) .timeline-card { margin-left: auto; margin-right: 0; border-right: 4px solid var(--neon-pink); text-align: right; }
+        @media (max-width: 768px) {
+            #schedule::before { left: 30px; }
+            .timeline-item { flex-direction: column; align-items: flex-start; margin-left: 60px; width: auto; padding-right: 20px; }
+            .timeline-beacon { left: 30px; }
+            .timeline-card { width: 100%; text-align: left !important; margin: 0 !important; border: 1px solid rgba(255, 255, 255, 0.1); border-left: 4px solid var(--neon-blue) !important; border-right: none !important; clip-path: none; }
+        }
+
+        /* --- INSTAGRAM FEED STYLES --- */
+        .insta-card {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .insta-card img {
+            image-rendering: -webkit-optimize-contrast;
+        }
+
+        /* --- CLUBS --- */
+        .club-logo-frame { width: 80px; height: 80px; border-radius: 50%; overflow: hidden; margin: 0 auto 15px; border: 2px solid var(--domain-color); box-shadow: 0 0 15px var(--domain-color); background: #000; display: flex; align-items: center; justify-content: center; }
+        .club-logo-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .club-tab-btn.active { color: white; border-color: transparent; }
+        .btn-music.active { background: var(--neon-pink); box-shadow: 0 0 20px var(--neon-pink); color: black; }
+        .btn-robotics.active { background: var(--neon-blue); box-shadow: 0 0 20px var(--neon-blue); color: black; }
+        .btn-coding.active { background: var(--neon-green); box-shadow: 0 0 20px var(--neon-green); color: black; }
+        .btn-design.active { background: var(--neon-gold); box-shadow: 0 0 20px var(--neon-gold); color: black; }
+        .btn-student.active { background: var(--neon-purple); box-shadow: 0 0 20px var(--neon-purple); color: black; }
+        .domain-container { display: none; opacity: 0; transform: translateY(20px); transition: all 0.5s ease; }
+        .domain-container.active { display: block; opacity: 1; transform: translateY(0); }
+
+        /* --- MAP & MEMORIES --- */
+        .map-frame { width: 100%; height: 100%; border: none; filter: grayscale(100%) invert(92%) contrast(83%); }
+        .map-container { position: relative; width: 100%; height: 350px; border: 1px solid var(--neon-blue); border-radius: 10px; overflow: hidden; }
+        .masonry-col { column-count: 1; column-gap: 1.5rem; }
+        @media (min-width: 640px) { .masonry-col { column-count: 2; } }
+        @media (min-width: 1024px) { .masonry-col { column-count: 4; } }
+        .polaroid { background: white; padding: 10px 10px 35px 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transform-origin: center; transition: 0.3s; margin-bottom: 30px; break-inside: avoid; position: relative; }
+        .polaroid:hover { transform: scale(1.05) rotate(0deg) !important; z-index: 50; }
+        .polaroid img { width: 100%; height: auto; display: block; filter: sepia(20%) contrast(1.1); }
+        .handwriting { font-family: 'Patrick Hand', cursive; color: #333; font-size: 1.2rem; text-align: center; margin-top: 10px; font-weight: bold; }
+        .washi-tape { position: absolute; top: -12px; left: 50%; transform: translateX(-50%) rotate(-2deg); width: 80px; height: 20px; background-color: rgba(255,215,0,0.5); opacity: 0.8; clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%); }
+
+        /* --- WIDGETS --- */
+        .chat-widget { position: fixed; bottom: 30px; right: 30px; z-index: 150; }
+        .chat-window { position: absolute; bottom: 85px; right: 0; width: 320px; height: 450px; background: rgba(5,5,10,0.95); border: 1px solid var(--neon-blue); border-radius: 12px; display: none; flex-direction: column; backdrop-filter: blur(10px); overflow: hidden; box-shadow: 0 0 30px rgba(0, 247, 255, 0.2); }
+        .chat-orb { width: 60px; height: 60px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #00f7ff, #001a20); box-shadow: 0 0 20px var(--neon-blue), inset 0 0 10px rgba(255,255,255,0.5); display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; transition: transform 0.3s; }
+        .chat-orb:hover { transform: scale(1.1); }
+        .sos-widget { position: fixed; bottom: 30px; left: 30px; z-index: 150; }
+        .sos-orb { width: 60px; height: 60px; border-radius: 50%; background: #220000; border: 2px solid var(--neon-red); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 15px var(--neon-red); position: relative; overflow: hidden; }
+        .sos-orb:hover { background: var(--neon-red); color: white; box-shadow: 0 0 40px var(--neon-red); }
+
+        /* --- SQUADS SLIDER --- */
+        .scrolling-wrapper { overflow: hidden; white-space: nowrap; position: relative; width: 100%; scroll-behavior: smooth; }
+        .scrolling-content { display: inline-flex; width: max-content; gap: 2rem; transition: transform 0.5s ease; padding-left: 20px; padding-right: 20px; }
+        
+        /* --- NEW FEATURES STYLES --- */
+        .vote-bar-container { width: 100%; height: 20px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; margin-top: 10px; position: relative; }
+        .vote-fill { height: 100%; transition: width 1s ease-in-out; }
+        .vote-fill.opt1 { background: linear-gradient(90deg, #007cf0, #00dfd8); }
+        .vote-fill.opt2 { background: linear-gradient(90deg, #7928ca, #ff0080); }
+        
+        .post-card { break-inside: avoid; margin-bottom: 20px; background: rgba(10,10,15,0.8); border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(5px); transition: 0.3s; cursor: pointer; }
+        .post-card:hover { border-color: var(--neon-green); box-shadow: 0 0 15px rgba(10,255,10,0.2); transform: scale(1.02); }
+        
+        .active-tab-btn { background: rgba(0, 247, 255, 0.2) !important; border-color: var(--accent) !important; color: var(--accent) !important; box-shadow: 0 0 15px var(--accent); }
+        .inactive-tab-btn { border-color: #4b5563 !important; color: #9ca3af !important; background: transparent !important; box-shadow: none !important; }
+
+        .leaderboard-row { display: flex; align-items: center; justify-content: space-between; padding: 10px; border-bottom: 2px dashed #ccc; font-size: 1.2rem; font-weight: bold; }
+        .leaderboard-row:last-child { border-bottom: none; }
+        .rank-icon { font-size: 1.5rem; margin-right: 10px; }
+
+        /* NEW ADDITIONS FOR REGISTRATION AND PASS */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--neon-pink); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: white; }
+
+        .clip-corner {
+            clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%, 0 30%);
+        }
+        .rotate-y-12 { transform: perspective(1000px) rotateY(12deg); }
+        
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="font-body selection:bg-accent selection:text-black" id="main-body">
+
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    <button id="music-toggle" class="music-toggle-btn" onclick="toggleMusic()" title="Toggle Music">
+        <i class="fas fa-volume-up"></i>
+    </button>
+
+    <div id="bg-video-wrapper">
+        <div class="video-overlay"></div>
+        <video id="bg-video" loop muted playsinline>
+            <source src="Cinematic_Logo_Reveal_Animation_Request (1).mp4" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay pointer-events-none z-10"></div>
+    </div>
+    
+    <div class="cyber-grid"></div>
+
+    <div id="intro-overlay">
+        <video id="video-loader" class="intro-vid-fullscreen" playsinline onerror="this.style.display='none'; document.getElementById('loading-text-container').style.display='flex'"><source src="Video_Creation_and_Delivery.mp4" type="video/mp4"></video>
+        <video id="video-reveal" class="intro-vid-fullscreen" playsinline onerror="this.style.display='none'"><source src="Cinematic_Logo_Reveal_Animation_Request (1).mp4" type="video/mp4"></video>
+        
+        <button onclick="skipIntro()" class="absolute top-8 right-8 z-[10001] border border-white/30 bg-black/50 text-white font-orbitron text-xs px-6 py-2 backdrop-blur-md hover:bg-accent hover:text-black transition uppercase tracking-widest clip-corner">
+            Skip Sequence <i class="fas fa-forward ml-2"></i>
+        </button>
+
+        <div id="loading-text-container">
+            <h1 class="text-white font-mono text-6xl md:text-8xl font-black tracking-tighter" id="loading-percent">0%</h1>
+            <div class="loader-bar-bg"><div class="loader-bar-fill" id="loader-fill"></div></div>
+            <p class="text-accent font-mono text-xs mt-2 animate-pulse">ESTABLISHING SECURE UPLINK...</p>
+        </div>
+
+        <div id="start-screen-content" class="flex flex-col items-center justify-center h-full">
+            <div class="start-trigger-container flex flex-col items-center group" onclick="startExperience()">
+                <div class="flex items-center gap-4 md:gap-6 mb-6">
+                    <div class="relative w-24 h-24 md:w-32 md:h-32 rounded-full p-1 bg-gradient-to-tr from-accent to-transparent start-logo-glow flex items-center justify-center">
+                         <div class="w-full h-full rounded-full bg-black flex items-center justify-center overflow-hidden border-2 border-black relative z-10">
+                            <img src="https://i.pinimg.com/736x/5b/c0/02/5bc002df37a2c4e89cd45e3f11f93d12.jpg" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition duration-500">
+                         </div>
+                    </div>
+                    <h1 class="font-orbitron font-black italic text-5xl md:text-7xl tracking-tighter flex flex-col md:block items-start transition duration-500 group-hover:scale-105">
+                        <span class="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">IMPRESSIONS</span>
+                        <span class="text-primary drop-shadow-[0_0_25px_var(--primary)] ml-0 md:ml-2">26'</span>
+                    </h1>
+                </div>
+                <div class="mt-8 flex flex-col items-center gap-2">
+                    <p class="text-gray-400 font-mono text-[10px] tracking-[0.5em] uppercase group-hover:text-accent transition">Tap to Initialize</p>
+                    <i class="fas fa-chevron-down text-accent animate-bounce text-xl opacity-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="mobile-menu">
+        <button class="absolute top-6 right-6 text-white text-3xl" onclick="toggleMobileMenu()">✕</button>
+        <a href="#control-room" onclick="toggleMobileMenu()">DASHBOARD</a>
+        <a href="#vote-section" onclick="toggleMobileMenu()">LIVE POLL</a>
+        <a href="#event-reg" onclick="toggleMobileMenu()">REGISTER</a>
+        <a href="#smart-pass" onclick="toggleMobileMenu()">MY PASS</a>
+        <a href="#memories" onclick="toggleMobileMenu()">GALLERY</a>
+    </div>
+
+    <div id="admin-login-modal" class="fixed inset-0 bg-black/95 z-[250] hidden items-center justify-center backdrop-blur-xl">
+        <div class="bg-black border border-neon-green p-8 max-w-md w-full rounded-lg shadow-[0_0_50px_rgba(10,255,10,0.3)] relative text-center">
+            <h2 class="text-2xl font-orbitron text-neon-green mb-4 tracking-widest">SECURITY CHECK</h2>
+            <p class="text-gray-400 font-mono text-xs mb-6">ENTER ENCRYPTED KEY</p>
+            <input type="password" id="admin-pass-input" class="w-full bg-white/5 border border-neon-green/30 p-3 text-white font-mono text-center outline-none focus:border-neon-green focus:shadow-[0_0_15px_rgba(10,255,10,0.5)] transition mb-4" placeholder="******">
+            <button onclick="authenticateAdmin()" class="w-full bg-neon-green/20 border border-neon-green text-neon-green py-2 font-orbitron font-bold hover:bg-neon-green hover:text-black transition">UNLOCK CONSOLE</button>
+            <button onclick="closeAdminLogin()" class="mt-4 text-gray-500 hover:text-white text-xs font-mono">CANCEL</button>
+            <div id="login-error" class="text-red-500 font-mono text-xs mt-2 hidden">ACCESS DENIED</div>
+        </div>
+    </div>
+
+    <div id="admin-modal" class="fixed inset-0 bg-black/98 z-[200] hidden items-center justify-center backdrop-blur-xl">
+        <div class="bg-[#0a0a0a] border border-neon-green p-6 max-w-2xl w-full rounded-lg shadow-[0_0_50px_rgba(10,255,10,0.2)] relative overflow-y-auto max-h-[90vh]">
+            <div class="flex justify-between items-center mb-6 border-b border-gray-800 pb-4">
+                <h2 class="text-3xl font-orbitron text-neon-green tracking-widest">ADMIN CONSOLE</h2>
+                <button onclick="toggleAdmin()" class="text-white hover:text-red-500 text-2xl">✕</button>
+            </div>
+            <div class="mb-8">
+                <h3 class="text-white font-mono mb-4 border-l-4 border-neon-blue pl-3">INITIATE LIVE VOTE</h3>
+                <input type="text" id="admin-vote-q" placeholder="Question (e.g. Who wins RoboWar?)" class="w-full bg-white/5 border border-white/20 p-2 mb-2 text-white font-mono">
+                <div class="flex gap-2 mb-2">
+                    <input type="text" id="admin-vote-opt1" placeholder="Option 1" class="w-1/2 bg-white/5 border border-white/20 p-2 text-white font-mono">
+                    <input type="text" id="admin-vote-opt2" placeholder="Option 2" class="w-1/2 bg-white/5 border border-white/20 p-2 text-white font-mono">
+                </div>
+                <button onclick="startNewVote()" class="w-full bg-neon-blue/20 border border-neon-blue text-neon-blue py-2 font-orbitron hover:bg-neon-blue hover:text-black transition">DEPLOY VOTE</button>
+            </div>
+            <div class="mb-8">
+                <h3 class="text-white font-mono mb-4 border-l-4 border-neon-pink pl-3">BROADCAST ANNOUNCEMENT</h3>
+                <textarea id="admin-post-text" placeholder="Write update..." class="w-full bg-white/5 border border-white/20 p-2 mb-2 text-white font-mono h-24"></textarea>
+                <input type="text" id="admin-post-img" placeholder="Image URL (Optional)" class="w-full bg-white/5 border border-white/20 p-2 mb-2 text-white font-mono">
+                <button onclick="createPost()" class="w-full bg-neon-pink/20 border border-neon-pink text-neon-pink py-2 font-orbitron hover:bg-neon-pink hover:text-black transition">TRANSMIT UPDATE</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="post-view-modal" class="fixed inset-0 bg-black/98 z-[250] hidden items-center justify-center backdrop-blur-xl p-4">
+        <div class="bg-[#0a0a0a] border border-white/20 w-full max-w-4xl h-[90vh] flex flex-col rounded-lg shadow-[0_0_50px_rgba(255,255,255,0.1)] relative overflow-hidden">
+            <button onclick="closePostModal()" class="absolute top-4 right-4 text-white hover:text-alert text-3xl z-50 bg-black/50 rounded-full w-10 h-10 flex items-center justify-center">✕</button>
+            <div class="flex-1 overflow-y-auto" id="post-modal-content">
+            </div>
+        </div>
+    </div>
+
+    <div id="sos-modal" class="fixed inset-0 bg-black/95 z-[200] hidden items-center justify-center backdrop-blur-xl">
+        <div class="bg-[#050505] border border-alert p-1 max-w-lg w-full rounded-lg shadow-[0_0_100px_rgba(255,0,60,0.5)] relative overflow-hidden">
+            <div class="p-8 relative">
+                <div class="absolute top-4 right-4 text-alert font-mono text-xs animate-pulse">WARNING: ACTIVE</div>
+                <div class="text-center mb-8">
+                    <i class="fas fa-biohazard text-6xl text-alert mb-4 animate-pulse"></i>
+                    <h2 class="text-4xl font-orbitron text-white mb-1 tracking-widest font-black">EMERGENCY</h2>
+                    <p class="text-gray-400 text-xs font-mono uppercase">Use only in case of critical failure.</p>
+                </div>
+                <div class="space-y-4">
+                    <a href="tel:+911202400973" class="flex items-center justify-between px-6 py-4 bg-alert/10 border border-alert/30 hover:bg-alert hover:text-black transition font-orbitron font-bold">HELPLINE <i class="fas fa-phone-alt"></i></a>
+                    <a href="https://wa.me/917428633120" class="flex items-center justify-between px-6 py-4 bg-green-900/10 border border-green-500/30 hover:bg-green-500 hover:text-black transition text-green-400 font-orbitron font-bold">WHATSAPP <i class="fab fa-whatsapp text-xl"></i></a>
+                    <button onclick="shareLocation()" class="w-full flex items-center justify-between px-6 py-4 bg-blue-900/10 border border-blue-500/30 hover:bg-blue-500 hover:text-black transition text-blue-400 font-orbitron font-bold">SHARE GPS <i class="fas fa-satellite-dish"></i></button>
+                </div>
+                <button onclick="toggleSOS()" class="mt-8 w-full text-center text-gray-600 hover:text-white text-xs tracking-[0.3em] font-mono border-t border-gray-800 pt-4">ABORT SEQUENCE</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="sos-widget">
+        <button onclick="toggleSOS()" class="sos-orb text-red-500"><i class="fas fa-exclamation-triangle text-2xl"></i></button>
+        <div class="text-center mt-2 text-[10px] font-orbitron text-red-500 tracking-widest font-bold">SOS</div>
+    </div>
+
+    <nav class="fixed top-0 w-full transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-6">
+                <a href="https://www.jiit.ac.in/" target="_blank" class="hover:scale-110 transition duration-300">
+                    <img src="https://www.jiit.ac.in/jiit/SSSIC/images/jiit.png" alt="JIIT Logo" class="h-12 w-auto filter drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]">
+                </a>
+                
+                <div class="text-2xl font-orbitron font-black italic text-white flex items-center gap-3 border-l-2 border-white/20 pl-6">
+                    <img src="https://i.pinimg.com/736x/5b/c0/02/5bc002df37a2c4e89cd45e3f11f93d12.jpg" alt="Fest Logo" class="w-10 h-10 object-contain border border-accent/50 rounded-full p-1 shadow-[0_0_10px_var(--accent)]">
+                    <span>IMPRESSIONS <span class="text-primary">26'</span></span>
+                </div>
+            </div>
+        
+            <ul class="hidden md:flex gap-6 font-orbitron font-bold text-xs tracking-widest text-gray-400">
+                <li><a href="#control-room" class="hover:text-accent transition">DASHBOARD</a></li>
+                <li><a href="#vote-section" class="hover:text-neon-green transition animate-pulse">LIVE POLL</a></li>
+                <li><a href="#event-reg" class="hover:text-halogen transition">REGISTER</a></li>
+                <li><a href="#announcements" class="hover:text-neon-pink transition">UPDATES</a></li>
+                <li><a href="#memories" class="hover:text-neon-gold transition">GALLERY</a></li>
+            </ul>
+            <a href="#smart-pass" class="hidden md:block border border-accent text-accent px-4 py-1 font-orbitron text-xs hover:bg-accent hover:text-black transition font-bold">MY PASS</a>
+            
+            <button class="md:hidden text-white text-2xl" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <section id="home" class="relative min-h-screen flex flex-col justify-center items-center text-center px-4 pt-20 z-10">
+        <h1 class="font-orbitron text-5xl md:text-8xl font-black leading-none mb-6 reveal">
+            <span class="block text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]">IMPRESSIONS</span>
+            <span class="block text-transparent bg-clip-text bg-gradient-to-r from-accent via-white to-robo animate-pulse-fast drop-shadow-[0_0_30px_#00f7ff]">26'</span>
+        </h1>
+        <p class="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-6 font-body tracking-wider reveal">
+            Initiating the ultimate <span class="text-accent font-bold">Techno-Cultural</span> sequence.<br>JIIT NOIDA SECTOR 62 + 128
+        </p>
+
+        <h3 class="countdown-intro-text reveal">Feel the buzz; it's time to countdown! <i class="fas fa-bolt text-yellow-400"></i></h3>
+
+        <div id="hero-countdown" class="flex flex-wrap justify-center gap-4 md:gap-8 mb-10 reveal">
+            <div class="countdown-box"><span id="d-days">00</span><label>DAYS</label></div>
+            <div class="countdown-box"><span id="d-hours">00</span><label>HRS</label></div>
+            <div class="countdown-box"><span id="d-mins">00</span><label>MIN</label></div>
+            <div class="countdown-box"><span id="d-secs">00</span><label>SEC</label></div>
+        </div>
+
+        <div class="flex flex-col md:flex-row gap-4 reveal w-full md:w-auto px-4">
+            <a href="#event-reg" class="px-8 py-3 bg-accent/10 border border-accent text-accent font-orbitron font-bold hover:bg-accent hover:text-black transition shadow-[0_0_20px_rgba(0,247,255,0.3)] w-full md:w-auto">JOIN FLEET</a>
+            <a href="#announcements" class="px-8 py-3 border border-white/20 text-white font-orbitron font-bold hover:bg-white hover:text-black transition w-full md:w-auto">LIVE FEED</a>
+        </div>
+    </section>
+
+    <section id="control-room" class="py-12 container mx-auto px-6 z-10 relative border-t border-b border-white/10 bg-black/40 backdrop-blur-md">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="tech-card p-6 flex flex-col items-center justify-center">
+                <div class="text-gray-500 font-mono text-xs mb-2">SYSTEM STATUS</div>
+                <div class="flex items-center gap-2 text-neon-green font-orbitron font-bold text-xl"><div class="w-3 h-3 bg-neon-green rounded-full shadow-[0_0_10px_#0aff0a] animate-pulse"></div> ONLINE</div>
+            </div>
+            <div class="tech-card p-6 flex flex-col items-center justify-center">
+                <div class="text-gray-500 font-mono text-xs mb-2">CURRENT TIME</div>
+                <div id="live-clock" class="text-white font-mono text-2xl font-bold">00:00:00</div>
+            </div>
+            <div class="tech-card p-6 flex flex-col items-center justify-center">
+                <div class="text-gray-500 font-mono text-xs mb-2">ACTIVE EVENT</div>
+                <div id="active-event-display" class="text-primary font-orbitron font-bold text-center">LOADING...</div>
+            </div>
+            <div class="tech-card p-6 flex flex-col items-center justify-center">
+                <div class="text-gray-500 font-mono text-xs mb-2">NEXT EVENT IN</div>
+                <div id="countdown-timer" class="text-halogen font-mono text-2xl font-bold">00h 45m</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="vote-section" class="py-24 container mx-auto px-6 z-10 relative">
+        <div class="tech-card p-8 border-2 border-neon-green/30 relative overflow-hidden text-center max-w-5xl mx-auto shadow-[0_0_40px_rgba(10,255,10,0.1)]">
+            <div class="absolute -top-10 -right-10 w-40 h-40 bg-neon-green/10 blur-[80px] rounded-full"></div>
+            
+            <div class="animate-flash-green bg-[#0aff0a] text-black px-6 py-2 text-base font-black tracking-[0.2em] inline-block mb-8 rounded-full border-2 border-white relative z-50">
+                ● LIVE NOW
+            </div>
+            
+            <h2 id="vote-question" class="text-2xl md:text-4xl font-orbitron font-bold text-white mb-10 drop-shadow-md">Waiting for Admin...</h2>
+            
+            <div class="flex flex-col md:flex-row gap-8 items-center justify-center relative mt-8">
+                <div class="vote-card team-blue">
+                    <div class="tilt-shine"></div>
+                    <div class="text-neon-blue font-mono text-xs mb-2 tracking-widest">TEAM A</div>
+                    <h3 id="lbl-opt1" class="text-3xl font-black text-white mb-2 tracking-wide drop-shadow-[0_0_10px_rgba(0,247,255,0.5)]">Team Alpha</h3>
+                    <div class="text-6xl font-mono text-white font-bold mb-4" id="perc-opt1">50%</div>
+                    <div class="w-full h-4 bg-gray-900 rounded-full overflow-hidden border border-white/10">
+                        <div id="bar-opt1" class="h-full progress-striped bg-gradient-to-r from-blue-600 to-cyan-400" style="width: 50%"></div>
+                    </div>
+                    <button onclick="castVote(1, this)" class="vote-btn vote-btn-blue">VOTE TEAM A</button>
+                </div>
+
+                <div class="vs-badge">VS</div>
+
+                <div class="vote-card team-pink">
+                    <div class="tilt-shine"></div>
+                    <div class="text-neon-pink font-mono text-xs mb-2 tracking-widest">TEAM B</div>
+                    <h3 id="lbl-opt2" class="text-3xl font-black text-white mb-2 tracking-wide drop-shadow-[0_0_10px_rgba(255,0,255,0.5)]">Team Beta</h3>
+                    <div class="text-6xl font-mono text-white font-bold mb-4" id="perc-opt2">50%</div>
+                    <div class="w-full h-4 bg-gray-900 rounded-full overflow-hidden border border-white/10">
+                        <div id="bar-opt2" class="h-full progress-striped bg-gradient-to-r from-purple-600 to-pink-500" style="width: 50%"></div>
+                    </div>
+                    <button onclick="castVote(2, this)" class="vote-btn vote-btn-pink">VOTE TEAM B</button>
+                </div>
+            </div>
+            
+            <p class="mt-12 text-gray-500 font-mono text-xs tracking-widest uppercase">
+                <i class="fas fa-satellite-dish animate-pulse mr-2 text-green-500"></i> Real-time Uplink Active
+            </p>
+        </div>
+    </section>
+
+    <section id="predictions" class="py-24 container mx-auto px-6 z-10 relative">
+        <div class="text-center mb-16">
+            <h2 class="text-5xl font-orbitron font-black text-white">FEST ORACLE</h2>
+            <p class="text-halogen font-mono tracking-widest text-xs mt-2">PREDICT THE FUTURE // WIN ETERNAL GLORY</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+            <div class="tech-card p-8 border-t-4 border-halogen relative">
+                <h3 class="text-2xl font-orbitron font-bold text-white mb-6">MAKE YOUR PREDICTION</h3>
+                <div class="space-y-4">
+                    <input type="text" id="oracle-enroll" placeholder="ENTER ENROLLMENT NO. (Required)" class="w-full bg-white/5 border border-white/20 p-3 text-white font-mono focus:border-halogen outline-none">
+                    <select id="oracle-choice" class="w-full bg-white/5 border border-white/20 p-3 text-white font-mono focus:border-halogen outline-none">
+                        <option value="" disabled selected>Who wins Best Project?</option>
+                        <option value="Team Alpha">Team Alpha</option>
+                        <option value="Team Beta">Team Beta</option>
+                        <option value="Cyborgs">Cyborgs</option>
+                        <option value="Mecha">Mecha</option>
+                    </select>
+                    <button onclick="savePrediction()" class="w-full py-3 bg-halogen/20 border border-halogen text-halogen font-orbitron font-bold hover:bg-halogen hover:text-black transition">LOCK PREDICTION</button>
+                </div>
+                <div id="prediction-result" class="mt-6 p-4 border border-dashed border-white/20 hidden">
+                    <h4 class="text-white font-mono text-sm mb-2">PREDICTION STATUS</h4>
+                    <p id="pred-text" class="text-gray-400 text-xs">Calculating...</p>
+                </div>
+            </div>
+
+            <div class="relative">
+                <div class="tech-leaderboard w-full md:w-[95%] mx-auto">
+                    <div class="tech-leaderboard-header">
+                        <h3 class="text-xl font-orbitron font-bold text-white tracking-widest"><i class="fas fa-trophy text-yellow-400 mr-2"></i> TOP SEERS</h3>
+                        <div class="flex items-center gap-2">
+                            <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                            <span class="text-[10px] font-mono text-green-400">LIVE FEED</span>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 space-y-2">
+                        <div class="tech-rank-row">
+                            <div class="rank-num rank-1">01</div>
+                            <div class="flex-1">
+                                <div class="flex justify-between text-xs font-mono text-gray-300 mb-1">
+                                    <span>RAHUL (98%)</span>
+                                    <span class="text-green-400">GENIUS</span>
+                                </div>
+                                <div class="rank-bar"><div class="rank-fill bg-gradient-to-r from-yellow-600 to-yellow-300" style="width: 98%"></div></div>
+                            </div>
+                        </div>
+
+                        <div class="tech-rank-row">
+                            <div class="rank-num rank-2">02</div>
+                            <div class="flex-1">
+                                <div class="flex justify-between text-xs font-mono text-gray-300 mb-1">
+                                    <span>PRIYA (92%)</span>
+                                    <span class="text-blue-400">ELITE</span>
+                                </div>
+                                <div class="rank-bar"><div class="rank-fill bg-gradient-to-r from-gray-600 to-gray-300" style="width: 92%"></div></div>
+                            </div>
+                        </div>
+
+                        <div class="tech-rank-row">
+                            <div class="rank-num rank-3">03</div>
+                            <div class="flex-1">
+                                <div class="flex justify-between text-xs font-mono text-gray-300 mb-1">
+                                    <span>AMIT (85%)</span>
+                                    <span class="text-orange-400">PRO</span>
+                                </div>
+                                <div class="rank-bar"><div class="rank-fill bg-gradient-to-r from-orange-800 to-orange-500" style="width: 85%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-3 border-t border-white/10 text-center">
+                        <p class="text-[10px] font-mono text-gray-500">* DATA REFRESHES AFTER EVERY EVENT BLOCK</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="announcements" class="py-24 container mx-auto px-6 z-10 relative">
+        <div class="text-center mb-16 reveal">
+            <h2 class="text-5xl font-orbitron font-black text-white">HOLO FEED</h2>
+            <p class="text-neon-pink font-mono tracking-widest text-xs mt-2">OFFICIAL TRANSMISSIONS & UPDATES</p>
+        </div>
+        <div id="posts-container" class="max-w-md mx-auto flex flex-col gap-8"></div>
+        <div class="text-center mt-8 text-gray-500 font-mono text-xs">END OF FEED</div>
+    </section>
+
+    <section id="schedule" class="py-24 container mx-auto px-6 z-10 relative">
+        <div class="text-center mb-20 reveal">
+            <h2 class="text-5xl font-orbitron font-black text-white mt-2">TIMELINE</h2>
+            <p class="text-accent font-mono tracking-widest text-xs mt-2">SYNCHRONIZED EVENTS SEQUENCE</p>
+        </div>
+        <div class="relative max-w-5xl mx-auto">
+            <div class="timeline-day-header reveal"><span>DAY 01 // FEB 27</span></div>
+
+            <div class="timeline-item reveal">
+                <div class="timeline-beacon"></div>
+                <div class="timeline-card">
+                    <span class="text-accent font-mono text-xs block mb-2"><i class="far fa-clock mr-2"></i>10:00 HRS • AUDITORIUM</span>
+                    <h3 class="text-2xl font-bold font-orbitron text-white">Guest Speaker</h3>
+                    <p class="text-gray-400 text-sm mt-3">Opening ceremony featuring industry leaders and visionaries.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item reveal">
+                <div class="timeline-beacon"></div>
+                <div class="timeline-card">
+                    <span class="text-neon-purple font-mono text-xs block mb-2"><i class="far fa-clock mr-2"></i>11:30 HRS • INNOVATION HUB</span>
+                    <h3 class="text-2xl font-bold font-orbitron text-white">Project Exhibition</h3>
+                    <p class="text-gray-400 text-sm mt-3">Showcase of hardware, software, and IoT prototypes.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item reveal">
+                <div class="timeline-beacon"></div>
+                <div class="timeline-card">
+                    <span class="text-neon-blue font-mono text-xs block mb-2"><i class="far fa-clock mr-2"></i>13:00 HRS • ARENA A</span>
+                    <h3 class="text-2xl font-bold font-orbitron text-white">Robo Soccer League</h3>
+                    <p class="text-gray-400 text-sm mt-3">High-octane robotic football matches. Team vs Team.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item reveal">
+                <div class="timeline-beacon"></div>
+                <div class="timeline-card">
+                    <span class="text-neon-pink font-mono text-xs block mb-2"><i class="far fa-clock mr-2"></i>14:30 HRS • TRACK ZERO</span>
+                    <h3 class="text-2xl font-bold font-orbitron text-white">Robo Race</h3>
+                    <p class="text-gray-400 text-sm mt-3">Speed and obstacle course navigation challenge.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item reveal">
+                <div class="timeline-beacon"></div>
+                <div class="timeline-card">
+                    <span class="text-neon-green font-mono text-xs block mb-2"><i class="far fa-clock mr-2"></i>15:30 HRS • LAB 2</span>
+                    <h3 class="text-2xl font-bold font-orbitron text-white">Maze Solver</h3>
+                    <p class="text-gray-400 text-sm mt-3">Autonomous bots navigating complex algorithms.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item reveal">
+                <div class="timeline-beacon"></div>
+                <div class="timeline-card">
+                    <span class="text-halogen font-mono text-xs block mb-2"><i class="far fa-clock mr-2"></i>16:30 HRS • DESIGN STUDIO</span>
+                    <h3 class="text-2xl font-bold font-orbitron text-white">CAD / Fusion 360</h3>
+                    <p class="text-gray-400 text-sm mt-3">3D Modeling competition. Design the future.</p>
+                </div>
+            </div>
+
+            <div class="timeline-day-header reveal"><span>DAY 02 // FEB 28</span></div>
+
+            <div class="timeline-item reveal">
+                <div class="timeline-beacon"></div>
+                <div class="timeline-card">
+                    <span class="text-accent font-mono text-xs block mb-2"><i class="far fa-clock mr-2"></i>10:00 HRS • MAIN HALL</span>
+                    <h3 class="text-2xl font-bold font-orbitron text-white">Innovation Challenge</h3>
+                    <p class="text-gray-400 text-sm mt-3">3-Hour Mini Hackathon. Theme revealed on the spot.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="scoreboards" class="py-24 container mx-auto px-6 z-10 relative">
+        <div class="text-center mb-12 reveal">
+            <h2 class="text-4xl font-orbitron font-bold text-white">LIVE SCORES</h2>
+        </div>
+        <div class="flex justify-center gap-4 mb-8 flex-wrap reveal">
+            <button id="btn-score-robo" onclick="switchScoreboard('robo')" class="px-6 py-2 border border-neon-blue bg-neon-blue/10 text-white font-orbitron text-sm active-tab-btn transition">ROBOTICS</button>
+            <button id="btn-score-cad" onclick="switchScoreboard('cad')" class="px-6 py-2 border border-gray-600 text-gray-400 font-orbitron text-sm inactive-tab-btn transition">CAD DESIGN</button>
+        </div>
+        <div class="max-w-4xl mx-auto tech-card p-6 reveal overflow-x-auto">
+            <table class="w-full text-left">
+                <thead><tr class="text-gray-500 font-mono text-xs"><th class="p-3">RANK</th><th class="p-3">TEAM</th><th class="p-3 text-right">SCORE</th></tr></thead>
+                <tbody id="score-table-body">
+                    <tr class="border-b border-white/5 hover:bg-white/5"><td class="p-3 text-accent">#1</td><td class="p-3 font-bold">Cyborgs 62</td><td class="p-3 text-right">50 PTS</td></tr>
+                    <tr class="border-b border-white/5 hover:bg-white/5"><td class="p-3 text-accent">#2</td><td class="p-3 font-bold">Mecha 128</td><td class="p-3 text-right">45 PTS</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="teams-registered" class="py-24 border-t border-b border-white/5 bg-white/5 relative z-10 overflow-hidden">
+        <div class="container mx-auto px-6 mb-12 text-center">
+            <h2 class="text-4xl font-orbitron font-bold text-white uppercase tracking-wider">Deployed Squads</h2>
+             <p class="text-neon-green font-mono text-sm mt-2">LIVE REGISTRATION FEED // ACCESSING DATABASE...</p>
+        </div>
+        
+        <div class="relative max-w-7xl mx-auto flex items-center">
+            <button onclick="scrollSquads('left')" class="absolute left-0 z-20 bg-black/50 hover:bg-accent hover:text-black text-white p-3 rounded-full border border-white/20 transition backdrop-blur-sm">
+                <i class="fas fa-chevron-left text-xl"></i>
+            </button>
+            <div class="scrolling-wrapper mx-12" id="squads-wrapper">
+                <div class="scrolling-content" id="squads-content">
+                    <div class="w-64 tech-card p-4 flex flex-col items-center border-t-2 border-accent shrink-0">
+                        <div class="w-16 h-16 rounded-full bg-gray-800 mb-3 flex items-center justify-center text-accent text-2xl"><i class="fas fa-code"></i></div>
+                        <h3 class="font-orbitron font-bold text-white">TEAM ALPHA</h3><span class="text-xs text-gray-400 font-mono">HACKATHON</span>
+                        <div class="mt-2 text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded">READY</div>
+                    </div>
+                    <div class="w-64 tech-card p-4 flex flex-col items-center border-t-2 border-accent shrink-0">
+                        <div class="w-16 h-16 rounded-full bg-gray-800 mb-3 flex items-center justify-center text-accent text-2xl"><i class="fas fa-robot"></i></div>
+                        <h3 class="font-orbitron font-bold text-white">TEAM BETA</h3><span class="text-xs text-gray-400 font-mono">ROBOTICS</span>
+                        <div class="mt-2 text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded">READY</div>
+                    </div>
+                </div>
+            </div>
+            <button onclick="scrollSquads('right')" class="absolute right-0 z-20 bg-black/50 hover:bg-accent hover:text-black text-white p-3 rounded-full border border-white/20 transition backdrop-blur-sm">
+                <i class="fas fa-chevron-right text-xl"></i>
+            </button>
+        </div>
+    </section>
+
+    <section id="event-reg" class="py-24 container mx-auto px-6 z-10 relative">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-8">
+                <h2 class="text-5xl font-orbitron font-black text-white">JOIN THE FLEET</h2>
+                <p class="text-neon-green font-mono tracking-widest text-xs mt-2">SECURE YOUR SPOT IN THE MATRIX</p>
+            </div>
+
+            <div class="flex justify-center gap-4 mb-8">
+                <button id="tab-indiv" onclick="switchRegType('indiv')" class="px-6 py-2 border border-accent bg-accent/20 text-white font-orbitron font-bold active-tab-btn transition clip-corner">INDIVIDUAL</button>
+                <button id="tab-group" onclick="switchRegType('group')" class="px-6 py-2 border border-white/20 text-gray-400 font-orbitron font-bold inactive-tab-btn transition clip-corner hover:text-white">GROUP / SQUAD</button>
+            </div>
+
+            <div class="tech-card p-1 md:p-8 bg-black/80 backdrop-blur-xl border border-neon-green/30 shadow-[0_0_50px_rgba(10,255,10,0.1)] relative overflow-hidden rounded-xl">
+                <form id="reg-form-indiv" onsubmit="handleRegistration(event)" class="relative z-10 p-6 block fade-in">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                        <div class="space-y-6">
+                            <h3 class="text-accent font-orbitron text-lg border-b border-accent/30 pb-2 mb-4">CADET DETAILS</h3>
+                            <div class="relative group">
+                                <label class="text-xs font-mono text-gray-400 mb-1 block">FULL NAME</label>
+                                <input type="text" id="reg-name" required class="w-full bg-white/5 border border-white/10 p-3 text-white font-orbitron focus:border-accent outline-none transition text-sm">
+                            </div>
+                            <div class="relative group">
+                                <label class="text-xs font-mono text-gray-400 mb-1 block">ENROLLMENT NO.</label>
+                                <input type="text" id="reg-enroll" required class="w-full bg-white/5 border border-white/10 p-3 text-white font-orbitron focus:border-accent outline-none transition text-sm uppercase">
+                            </div>
+                             <div class="grid grid-cols-2 gap-4">
+                                <div class="relative group">
+                                    <label class="text-xs font-mono text-gray-400 mb-1 block">BATCH</label>
+                                    <select id="reg-batch" class="w-full bg-white/5 border border-white/10 p-3 text-white font-mono focus:border-accent outline-none text-sm"><option>B1</option><option>B2</option><option>B3</option><option>B4</option><option>B5</option></select>
+                                </div>
+                                <div class="relative group">
+                                    <label class="text-xs font-mono text-gray-400 mb-1 block">YEAR</label>
+                                    <select id="reg-year" class="w-full bg-white/5 border border-white/10 p-3 text-white font-mono focus:border-accent outline-none text-sm"><option>1st Year</option><option>2nd Year</option><option>3rd Year</option><option>4th Year</option></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-6">
+                            <h3 class="text-neon-pink font-orbitron text-lg border-b border-neon-pink/30 pb-2 mb-4">MISSION SELECTION</h3>
+                            <div class="space-y-3 max-h-[250px] overflow-y-auto pr-2 custom-scrollbar">
+                                <label class="flex items-center space-x-3 p-3 border border-white/10 hover:border-neon-pink hover:bg-neon-pink/5 cursor-pointer transition group"><input type="checkbox" name="events" value="Hackathon" class="accent-neon-pink w-5 h-5"><span class="text-gray-300 font-mono text-sm group-hover:text-white">Impressions Hackathon</span></label>
+                                <label class="flex items-center space-x-3 p-3 border border-white/10 hover:border-neon-blue hover:bg-neon-blue/5 cursor-pointer transition group"><input type="checkbox" name="events" value="RoboWar" class="accent-neon-blue w-5 h-5"><span class="text-gray-300 font-mono text-sm group-hover:text-white">RoboWar Arena</span></label>
+                                <label class="flex items-center space-x-3 p-3 border border-white/10 hover:border-neon-green hover:bg-neon-green/5 cursor-pointer transition group"><input type="checkbox" name="events" value="Coding" class="accent-neon-green w-5 h-5"><span class="text-gray-300 font-mono text-sm group-hover:text-white">Blind Coding</span></label>
+                                 <label class="flex items-center space-x-3 p-3 border border-white/10 hover:border-halogen hover:bg-halogen/5 cursor-pointer transition group"><input type="checkbox" name="events" value="Gaming" class="accent-halogen w-5 h-5"><span class="text-gray-300 font-mono text-sm group-hover:text-white">Valorant Tournament</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full py-4 bg-gradient-to-r from-neon-blue to-neon-purple text-white font-black font-orbitron text-xl uppercase tracking-widest hover:shadow-[0_0_30px_rgba(188,19,254,0.6)] transition transform hover:scale-[1.01] border border-white/20 relative overflow-hidden group">
+                        <span class="relative z-10">INITIATE INDIVIDUAL REG</span>
+                        <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                    </button>
+                </form>
+
+                <form id="reg-form-group" onsubmit="handleGroupRegistration(event)" class="relative z-10 p-6 hidden fade-in">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                        <div class="space-y-6">
+                            <h3 class="text-neon-green font-orbitron text-lg border-b border-neon-green/30 pb-2 mb-4">SQUAD PROTOCOLS</h3>
+                            
+                            <div class="relative group">
+                                <label class="text-xs font-mono text-gray-400 mb-1 block">SQUAD CODENAME (Team Name)</label>
+                                <input type="text" id="group-name" required class="w-full bg-white/5 border border-white/10 p-3 text-white font-orbitron focus:border-neon-green outline-none transition text-sm uppercase tracking-widest placeholder-white/20" placeholder="e.g. PHANTOM_OPS">
+                            </div>
+
+                            <div class="relative group">
+                                <label class="text-xs font-mono text-gray-400 mb-1 block">SQUAD LEADER</label>
+                                <div class="flex gap-2">
+                                    <div class="bg-neon-green/20 border border-neon-green text-neon-green px-3 py-2 flex items-center justify-center font-bold font-mono text-xs">LDR</div>
+                                    <input type="text" id="group-leader" required class="w-full bg-white/5 border border-white/10 p-3 text-white font-orbitron focus:border-neon-green outline-none transition text-sm" placeholder="Leader Name">
+                                </div>
+                            </div>
+                            
+                             <div class="relative group">
+                                <label class="text-xs font-mono text-gray-400 mb-1 block">COMMS LINK (Phone)</label>
+                                <input type="tel" id="group-contact" required class="w-full bg-white/5 border border-white/10 p-3 text-white font-mono focus:border-neon-green outline-none transition text-sm tracking-widest">
+                            </div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <h3 class="text-halogen font-orbitron text-lg border-b border-halogen/30 pb-2 mb-4">OPERATIVES & MISSION</h3>
+                            
+                            <div id="members-container" class="space-y-2">
+                                <label class="text-xs font-mono text-gray-400 block">ADDITIONAL OPERATIVES</label>
+                                <div class="flex gap-2 member-row">
+                                    <input type="text" class="w-full bg-white/5 border border-white/10 p-2 text-white font-mono text-sm focus:border-white/50 outline-none" placeholder="Member 2 Name">
+                                </div>
+                            </div>
+                            <button type="button" onclick="addMemberField()" class="text-xs font-mono text-neon-green hover:text-white border border-dashed border-neon-green/50 hover:border-white px-2 py-1 w-full text-center transition mb-4">+ DEPLOY ANOTHER UNIT</button>
+
+                            <div class="bg-white/5 p-3 rounded border border-white/10">
+                                <label class="text-xs font-mono text-gray-400 mb-2 block">SELECT OBJECTIVE</label>
+                                <select id="group-event-select" class="w-full bg-black border border-white/20 p-2 text-white font-mono text-sm outline-none focus:border-halogen">
+                                    <option value="Hackathon">IMPRESSIONS HACKATHON</option>
+                                    <option value="RoboWar">ROBOWAR ARENA</option>
+                                    <option value="Valorant">VALORANT PROTOCOL</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full py-4 bg-gradient-to-r from-neon-green to-teal-600 text-black font-black font-orbitron text-xl uppercase tracking-widest hover:shadow-[0_0_30px_rgba(10,255,10,0.6)] transition transform hover:scale-[1.01] border border-white/20 relative overflow-hidden group clip-corner">
+                        <span class="relative z-10"><i class="fas fa-users mr-2"></i> CONFIRM SQUAD DEPLOYMENT</span>
+                        <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="smart-pass" class="py-24 container mx-auto px-6 z-10 relative">
+        <div class="flex flex-col md:flex-row items-center justify-center gap-12">
+            
+            <div class="w-full md:w-1/3">
+                <h2 class="text-4xl font-orbitron font-bold text-white mb-2">HOLO PASS</h2>
+                <p class="text-gray-400 font-mono text-xs mb-6">GENERATE YOUR ENTRY CREDENTIALS</p>
+                
+                <div class="space-y-4">
+                    <input type="text" id="pass-name" placeholder="YOUR NAME" class="w-full bg-transparent border-b border-gray-600 py-2 text-white font-orbitron focus:border-accent outline-none">
+                    <input type="text" id="pass-id" placeholder="ENROLLMENT ID" class="w-full bg-transparent border-b border-gray-600 py-2 text-white font-orbitron focus:border-accent outline-none uppercase">
+                    <button onclick="generatePass()" class="px-8 py-3 bg-white/5 border border-accent text-accent font-bold font-orbitron hover:bg-accent hover:text-black transition w-full mt-4">
+                        <i class="fas fa-qrcode mr-2"></i> GENERATE
+                    </button>
+                </div>
+            </div>
+
+            <div class="w-full md:w-auto perspective-1000">
+                <div id="id-card" class="relative w-[320px] h-[500px] bg-black border-2 border-white/20 rounded-2xl overflow-hidden transition-transform duration-500 hover:rotate-y-12 shadow-[0_0_50px_rgba(0,247,255,0.1)]">
+                    
+                    <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 z-0"></div>
+                    <div class="absolute top-0 w-full h-1/2 bg-gradient-to-b from-accent/20 to-transparent z-0"></div>
+                    
+                    <div class="relative z-10 flex flex-col items-center pt-8 h-full">
+                        <div class="w-24 h-24 rounded-full border-2 border-accent p-1 mb-4 shadow-[0_0_20px_var(--accent)] bg-black">
+                            <img src="https://i.pinimg.com/736x/5b/c0/02/5bc002df37a2c4e89cd45e3f11f93d12.jpg" class="w-full h-full rounded-full object-cover opacity-80">
+                        </div>
+                        
+                        <h3 class="font-orbitron font-black text-2xl text-white tracking-wider">IMPRESSIONS</h3>
+                        <div class="px-3 py-1 bg-accent/20 border border-accent rounded-full text-accent text-[10px] font-mono font-bold mt-2 mb-8">
+                            OFFICIAL ENTRY PASS
+                        </div>
+
+                        <div id="pass-details" class="text-center w-full px-8 opacity-50 blur-sm transition-all duration-500">
+                            <h2 id="card-name" class="text-white font-orbitron font-bold text-xl truncate">UNKNOWN</h2>
+                            <p id="card-id" class="text-gray-400 font-mono text-sm tracking-widest mt-1">NO DATA</p>
+                        </div>
+
+                        <div class="mt-auto mb-8 bg-white p-2 rounded-lg">
+                             <div id="qrcode-container"></div>
+                        </div>
+
+                        <div class="absolute top-0 left-0 w-full h-1 bg-neon-pink shadow-[0_0_15px_var(--neon-pink)] animate-scan opacity-50"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="quotes-section" class="py-24 container mx-auto px-6 z-10 relative">
+        <div class="tech-card p-10 text-center border-2 border-primary/30 relative overflow-hidden group hover:border-primary transition-all duration-500">
+             <div class="absolute -top-10 -left-10 w-40 h-40 bg-primary/20 blur-[100px] rounded-full"></div>
+            <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-accent/20 blur-[100px] rounded-full"></div>
+            <h2 class="font-orbitron text-2xl text-gray-400 mb-6 tracking-[0.5em] uppercase">Fest Vibes</h2>
+            <i class="fas fa-quote-left text-4xl text-primary mb-4 opacity-50"></i>
+            <p id="daily-quote" class="text-3xl md:text-5xl font-hand font-bold text-white leading-relaxed drop-shadow-lg">"Sleep is for the weak, the fest can't wait."</p>
+            <i class="fas fa-quote-right text-4xl text-primary mt-4 opacity-50"></i>
+        </div>
+    </section>
+    
+    <section id="memories" class="py-24 relative z-10">
+        <div class="container mx-auto px-6 text-center">
+            <span class="inline-block px-4 py-1 bg-white/10 rounded-full text-white font-hand text-xl rotate-[-2deg] mb-4 border border-white/20">✨ Throwback 2025</span>
+            <h2 class="font-mono text-5xl md:text-6xl text-white drop-shadow-[4px_4px_0_var(--neon-pink)] mb-12 font-bold tracking-tighter uppercase" style="text-shadow: 2px 2px 0px #00f7ff, -2px -2px 0px #ff00d4;">MEMORIES_DATABASE</h2>
+            <div id="photo-grid" class="masonry-col w-full max-w-7xl mx-auto pb-10"></div>
+        </div>
+    </section>
+
+    <section id="clubs" class="py-24 container mx-auto px-6 z-10 relative">
+        <div class="text-center mb-10">
+            <h2 class="font-orbitron text-5xl font-black text-white">JIIT <span class="text-neon-green">CLUBS</span></h2>
+            <p class="text-gray-400 font-mono text-xs mt-2 tracking-widest">CONNECT // COLLABORATE // CREATE</p>
+        </div>
+        
+        <div class="flex justify-center flex-wrap gap-4 mb-12">
+            <button class="club-tab-btn btn-music active" onclick="switchClubTab('music')">CULTURAL</button>
+            <button class="club-tab-btn btn-robotics" onclick="switchClubTab('robotics')">ROBOTICS</button>
+            <button class="club-tab-btn btn-coding" onclick="switchClubTab('coding')">TECH SOCIETIES</button>
+            <button class="club-tab-btn btn-design" onclick="switchClubTab('design')">CREATIVE</button>
+            <button class="club-tab-btn btn-student" onclick="switchClubTab('student')">LEADERSHIP</button>
+        </div>
+
+        <div id="domain-music" class="domain-container active" style="--domain-color: var(--neon-pink);">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="tech-card p-6 text-center group">
+                    <div class="club-logo-frame group-hover:scale-110 transition duration-500">
+                        <img src="https://i.pinimg.com/736x/bd/fc/a3/bdfca3d67114bee629d15bc1ef2436dc.jpg" alt="Ffortissimo Logo">
+                    </div>
+                    <h3 class="font-orbitron text-xl text-white mt-4">Ffortissimo</h3>
+                    <p class="text-gray-500 text-xs font-mono mb-3">Music Society</p>
+                    <a href="https://www.instagram.com/ffortissimo_j128?igsh=cDdkNDdoaHdoOHo=" target="_blank" class="inline-flex items-center gap-2 text-sm text-neon-pink hover:text-white transition border border-neon-pink/30 px-3 py-1 rounded-full">
+                        <i class="fab fa-instagram"></i> Follow
+                    </a>
+                </div>
+
+                <div class="tech-card p-6 text-center group">
+                    <div class="club-logo-frame group-hover:scale-110 transition duration-500">
+                        <img src="https://i.pinimg.com/736x/d0/df/85/d0df85c5ae7ce6d76e1ec0cf2df75822.jpg" alt="Abhivyakti Logo">
+                    </div>
+                    <h3 class="font-orbitron text-xl text-white mt-4">Abhivyakti</h3>
+                    <p class="text-gray-500 text-xs font-mono mb-3">Drama Society</p>
+                    <a href="https://www.instagram.com/abhivyaktidramasoc?igsh=eGcwYWZ2Ym45NHRq" target="_blank" class="inline-flex items-center gap-2 text-sm text-neon-pink hover:text-white transition border border-neon-pink/30 px-3 py-1 rounded-full">
+                        <i class="fab fa-instagram"></i> Follow
+                    </a>
+                </div>
+
+                <div class="tech-card p-6 text-center group">
+                    <div class="club-logo-frame group-hover:scale-110 transition duration-500">
+                        <img src="https://i.pinimg.com/736x/1f/79/09/1f7909002292e119835198ce7bfc6076.jpg" alt="Panache Logo">
+                    </div>
+                    <h3 class="font-orbitron text-xl text-white mt-4">Panache</h3>
+                    <p class="text-gray-500 text-xs font-mono mb-3">Fashion Society</p>
+                    <a href="https://www.instagram.com/panache_j128?igsh=cWFzbTNxZ2RkeWg0" target="_blank" class="inline-flex items-center gap-2 text-sm text-neon-pink hover:text-white transition border border-neon-pink/30 px-3 py-1 rounded-full">
+                        <i class="fab fa-instagram"></i> Follow
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="domain-robotics" class="domain-container" style="--domain-color: var(--neon-blue);">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <div class="tech-card p-6 text-center group">
+                    <div class="club-logo-frame group-hover:scale-110 transition duration-500">
+                        <img src="https://i.pinimg.com/736x/f9/4a/10/f94a10dc514409040ec1bc167e229e7b.jpg" alt="Innovation Logo">
+                    </div>
+                    <h3 class="font-orbitron text-xl text-white mt-4">Innovation</h3>
+                    <p class="text-gray-500 text-xs font-mono mb-3">Technical Hub</p>
+                    <a href="https://www.instagram.com/innovation.jiit?igsh=MW5wdHo2YmFiYjdjNA==" target="_blank" class="inline-flex items-center gap-2 text-sm text-neon-blue hover:text-white transition border border-neon-blue/30 px-3 py-1 rounded-full">
+                        <i class="fab fa-instagram"></i> Follow
+                    </a>
+                </div>
+
+                <div class="tech-card p-6 text-center group">
+                    <div class="club-logo-frame group-hover:scale-110 transition duration-500">
+                        <img src="https://i.pinimg.com/736x/31/f4/32/31f432239ca2e860ba47d6d928722fe2.jpg" alt="RPH Logo">
+                    </div>
+                    <h3 class="font-orbitron text-xl text-white mt-4">RPH</h3>
+                    <p class="text-gray-500 text-xs font-mono mb-3">Robotics & Hardware</p>
+                    <a href="https://www.instagram.com/rph_jiit?igsh=MWFmc2s4bzBjdnIyZA==" target="_blank" class="inline-flex items-center gap-2 text-sm text-neon-blue hover:text-white transition border border-neon-blue/30 px-3 py-1 rounded-full">
+                        <i class="fab fa-instagram"></i> Follow
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="domain-coding" class="domain-container" style="--domain-color: var(--neon-green);">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <div class="tech-card p-6 text-center group">
+                    <div class="club-logo-frame group-hover:scale-110 transition duration-500">
+                        <img src="https://i.pinimg.com/736x/67/0e/af/670eaf4523e896c4e587bc2b87ab0f4a.jpg" alt="CICR Logo">
+                    </div>
+                    <h3 class="font-orbitron text-xl text-white mt-4">CICR</h3>
+                    <p class="text-gray-500 text-xs font-mono mb-3">Coding & IT</p>
+                    <a href="https://www.instagram.com/cicr_jiit?igsh=MWNib3pma2xiYXpqcQ==" target="_blank" class="inline-flex items-center gap-2 text-sm text-neon-green hover:text-white transition border border-neon-green/30 px-3 py-1 rounded-full">
+                        <i class="fab fa-instagram"></i> Follow
+                    </a>
+                </div>
+
+                <div class="tech-card p-6 text-center group">
+                    <div class="club-logo-frame group-hover:scale-110 transition duration-500">
+                        <img src="https://i.pinimg.com/736x/d0/df/85/d0df85c5ae7ce6d76e1ec0cf2df75822.jpg" alt="IEEE Logo">
+                    </div>
+                    <h3 class="font-orbitron text-xl text-white mt-4">IEEE JIIT</h3>
+                    <p class="text-gray-500 text-xs font-mono mb-3">Tech Consortium</p>
+                    <a href="https://www.instagram.com/ieeesbjiit?igsh=MTJxeHdoeXpxenh6eQ==" target="_blank" class="inline-flex items-center gap-2 text-sm text-neon-green hover:text-white transition border border-neon-green/30 px-3 py-1 rounded-full">
+                        <i class="fab fa-instagram"></i> Follow
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="domain-design" class="domain-container" style="--domain-color: var(--neon-gold);">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <div class="tech-card p-6 text-center group">
+                    <div class="club-logo-frame group-hover:scale-110 transition duration-500">
+                        <img src="https://i.pinimg.com/736x/cb/7c/4a/cb7c4a4268444a18fcc36a552131c6d5.jpg" alt="Aura Logo">
+                    </div>
+                    <h3 class="font-orbitron text-xl text-white mt-4">Aura</h3>
+                    <p class="text-gray-500 text-xs font-mono mb-3">Photography Club</p>
+                    <a href="https://www.instagram.com/auraphotography.128?igsh=MXM0Y24zY2JleXJtdA==" target="_blank" class="inline-flex items-center gap-2 text-sm text-neon-gold hover:text-white transition border border-neon-gold/30 px-3 py-1 rounded-full">
+                        <i class="fab fa-instagram"></i> Follow
+                    </a>
+                </div>
+
+                <div class="tech-card p-6 text-center group">
+                    <div class="club-logo-frame group-hover:scale-110 transition duration-500">
+                        <img src="https://i.pinimg.com/736x/6a/72/c7/6a72c7fe9ee0de3c6ee76e7e65b91be0.jpg" alt="Aakriti Logo">
+                    </div>
+                    <h3 class="font-orbitron text-xl text-white mt-4">Aakriti</h3>
+                    <p class="text-gray-500 text-xs font-mono mb-3">Fine Arts Society</p>
+                    <a href="https://www.instagram.com/aakritijiit128?igsh=MTdxNjVodmp2YnJ4aQ==" target="_blank" class="inline-flex items-center gap-2 text-sm text-neon-gold hover:text-white transition border border-neon-gold/30 px-3 py-1 rounded-full">
+                        <i class="fab fa-instagram"></i> Follow
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="domain-student" class="domain-container" style="--domain-color: var(--neon-purple);">
+            <div class="grid grid-cols-1 place-items-center">
+                <div class="tech-card p-8 text-center group max-w-sm w-full">
+                    <div class="club-logo-frame w-32 h-32 mx-auto group-hover:scale-110 transition duration-500">
+                        <img src="https://i.pinimg.com/736x/33/75/c5/3375c570a80e0a2eb28b4a9dbbe7bfb1.jpg" alt="JYC Logo">
+                    </div>
+                    <h3 class="font-orbitron text-2xl text-white mt-6">JYC</h3>
+                    <p class="text-gray-500 text-sm font-mono mb-4">Jaypee Youth Club</p>
+                    <a href="https://www.instagram.com/jiityouthclub128?igsh=MW93YWQ1d2hxdjFrYg==" target="_blank" class="inline-flex items-center gap-2 text-base text-neon-purple hover:text-white transition border border-neon-purple/30 px-6 py-2 rounded-full">
+                        <i class="fab fa-instagram"></i> Connect
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-t border-white/10 bg-black pt-12 relative z-10 text-center">
+        <div class="container mx-auto px-6 pb-8 border-b border-white/5 mb-8">
+            <div class="flex flex-wrap justify-center gap-8 items-center">
+                <a href="https://www.jiit.ac.in/" target="_blank" class="group flex flex-col items-center gap-2 opacity-70 hover:opacity-100 transition">
+                    <div class="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center border border-white/20 group-hover:border-accent group-hover:bg-accent/20 transition overflow-hidden p-2">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7rlc4iCmQdCT8cfdMSRr-l0-wVRoGc3Wy9A&s" class="w-full h-full object-contain filter brightness-200">
+                    </div>
+                    <span class="text-[10px] font-mono tracking-widest text-gray-400 group-hover:text-white">WEBSITE</span>
+                </a>
+                <a href="https://www.linkedin.com/school/jaypee-institute-of-information-technology/?originalSubdomain=in" target="_blank" class="group flex flex-col items-center gap-2 opacity-70 hover:opacity-100 transition">
+                    <div class="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center border border-white/20 group-hover:border-blue-500 group-hover:bg-blue-500/20 transition overflow-hidden p-2">
+                         <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" class="w-full h-full object-contain filter invert">
+                    </div>
+                    <span class="text-[10px] font-mono tracking-widest text-gray-400 group-hover:text-white">LINKEDIN</span>
+                </a>
+                <a href="https://www.instagram.com/jiit.official?igsh=MXJ4eGE1a2xjbWl6aA==" target="_blank" class="group flex flex-col items-center gap-2 opacity-70 hover:opacity-100 transition">
+                    <div class="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center border border-white/20 group-hover:border-pink-500 group-hover:bg-pink-500/20 transition">
+                        <i class="fab fa-instagram text-3xl text-white group-hover:text-pink-500"></i>
+                    </div>
+                    <span class="text-[10px] font-mono tracking-widest text-gray-400 group-hover:text-white">INSTAGRAM</span>
+                </a>
+            </div>
+        </div>
+        <h2 class="text-3xl font-orbitron font-black mb-4 text-white tracking-widest">JIIT IMPRESSIONS '26</h2>
+        <p id="admin-trigger" class="text-gray-600 text-xs font-mono pb-8 cursor-pointer select-none" onclick="handleSecretClick()">SYSTEM STATUS: NOMINAL | © 2026 STUDENT COUNCIL</p>
+    </footer>
+
+    <div class="chat-widget">
+        <div class="chat-window" id="chat-window">
+            <div class="bg-accent/10 p-3 border-b border-white/10 flex justify-between items-center"><span class="font-orbitron text-accent text-sm tracking-widest">AI ASSISTANT</span><button onclick="toggleChat()" class="text-white hover:text-accent">✕</button></div>
+            <div class="flex-1 p-4 overflow-y-auto space-y-3" id="chat-body"><div class="bg-accent/10 text-accent p-2 rounded text-sm inline-block font-mono border border-accent/30">Hello! Ask me about Schedule, Map or Clubs.</div></div>
+            <div class="p-2 border-t border-white/10 flex gap-2 bg-black/50"><input type="text" id="chat-input" placeholder="Enter Command..." class="w-full bg-transparent text-white text-sm outline-none font-mono"><button onclick="handleUserChat()" class="text-accent font-bold">></button></div>
+        </div>
+        <button onclick="toggleChat()" class="chat-orb">
+            <i class="fas fa-user-astronaut text-white text-2xl z-10"></i>
+        </button>
+        <div class="text-center mt-2 text-[10px] font-orbitron text-accent tracking-widest font-bold">ASSISTANT</div>
+    </div>
+    
+    <div id="toast-container"></div>
+
+    <script>
+        // --- 0. NOTIFICATION SYSTEM ---
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            // Icon Selection
+            let icon = '<i class="fas fa-info-circle text-neon-blue"></i>';
+            if(type === 'success') icon = '<i class="fas fa-check-circle text-neon-green"></i>';
+            if(type === 'error') icon = '<i class="fas fa-exclamation-triangle text-neon-red"></i>';
+            if(type === 'warning') icon = '<i class="fas fa-bolt text-neon-gold"></i>';
+
+            toast.className = `cyber-toast ${type}`;
+            toast.innerHTML = `<div class="flex items-center"><span class="toast-icon">${icon}</span><span>${message}</span></div>`;
+
+            container.appendChild(toast);
+
+            // Trigger Animation
+            requestAnimationFrame(() => { toast.classList.add('show'); });
+
+            // Remove after 3 seconds
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(50px)';
+                setTimeout(() => toast.remove(), 400);
+            }, 3000);
+        }
+
+        // --- 1. DUAL VIDEO LOADER + 0-100% ANIMATION ---
+        function startExperience() {
+            const overlay = document.getElementById('intro-overlay');
+            const loaderVideo = document.getElementById('video-loader');
+            const revealVideo = document.getElementById('video-reveal');
+            const startContent = document.getElementById('start-screen-content');
+            const loadingTextContainer = document.getElementById('loading-text-container');
+            const music = document.getElementById('bg-music');
+
+            // 1. Hide start button
+            startContent.style.display = 'none';
+            
+            // 2. Hide existing text loader if present (Replaced by Video)
+            if(loadingTextContainer) loadingTextContainer.style.display = 'none';
+
+            // 3. Play New Loader Video (System Init)
+            loaderVideo.style.display = 'block';
+            loaderVideo.muted = false; // Ensure sound plays
+            loaderVideo.currentTime = 0;
+            loaderVideo.play().catch(e => {
+                console.error("Loader play failed", e);
+                // If video fails, just enter site
+                enterSite();
+                overlay.style.display = "none";
+            });
+
+            // 4. When Loader Video Ends -> Play Reveal Video
+            loaderVideo.onended = () => {
+                loaderVideo.style.display = 'none';
+                
+                revealVideo.style.display = 'block';
+                revealVideo.muted = false;
+                revealVideo.currentTime = 0;
+                revealVideo.play().catch(e => console.error("Reveal play failed", e));
+            };
+
+            // 5. When Reveal Video Ends -> Enter Site
+            revealVideo.onended = () => {
+                music.volume = 0.5; 
+                music.play().catch(e => console.log("Audio autoplay failed:", e));
+                overlay.style.transition = "opacity 1s ease";
+                overlay.style.opacity = "0";
+                setTimeout(() => { overlay.style.display = "none"; enterSite(); }, 1000);
+            };
+        }
+
+        /* --- NEW: SKIP INTRO FUNCTION --- */
+        function skipIntro() {
+            // 1. Pause videos
+            const v1 = document.getElementById('video-loader');
+            const v2 = document.getElementById('video-reveal');
+            if(v1) v1.pause();
+            if(v2) v2.pause();
+
+            // 2. Hide overlay immediately
+            const overlay = document.getElementById('intro-overlay');
+            overlay.style.display = "none";
+
+            // 3. Start Site Logic
+            enterSite();
+            
+            // 4. Ensure Music Starts (browsers block audio without interaction, clicking skip counts as interaction)
+            const music = document.getElementById('bg-music');
+            if(music.paused) {
+                music.volume = 0.5;
+                music.play().catch(e => console.log("Audio needed user interaction"));
+            }
+        }
+
+        function toggleMusic() {
+            const music = document.getElementById('bg-music');
+            const btn = document.getElementById('music-toggle');
+            const icon = btn.querySelector('i');
+            if (music.paused) { music.play(); btn.classList.remove('muted'); icon.classList.remove('fa-volume-mute'); icon.classList.add('fa-volume-up'); } 
+            else { music.pause(); btn.classList.add('muted'); icon.classList.remove('fa-volume-up'); icon.classList.add('fa-volume-mute'); }
+        }
+        function enterSite() {
+            document.getElementById('bg-video-wrapper').style.opacity = "1";
+            document.getElementById('bg-video').play();
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+            startHeroCountdown(); // START COUNTDOWN
+            loadVoteData();
+            loadPosts();
+            loadMemories(); 
+        }
+
+        // --- ADDED: HERO COUNTDOWN LOGIC ---
+        function startHeroCountdown() {
+            // Target: Feb 27, 2026, 10:00:00
+            const countDate = new Date('Feb 27, 2026 10:00:00').getTime();
+            
+            const interval = setInterval(() => {
+                const now = new Date().getTime();
+                const gap = countDate - now;
+
+                if(gap < 0) {
+                    clearInterval(interval);
+                    document.getElementById('hero-countdown').innerHTML = "<h2 class='text-4xl font-orbitron text-white animate-pulse shadow-[0_0_20px_var(--neon-blue)]'>FEST IS LIVE!</h2>";
+                    return;
+                }
+
+                const second = 1000;
+                const minute = second * 60;
+                const hour = minute * 60;
+                const day = hour * 24;
+
+                document.getElementById('d-days').innerText = Math.floor(gap / day).toString().padStart(2, '0');
+                document.getElementById('d-hours').innerText = Math.floor((gap % day) / hour).toString().padStart(2, '0');
+                document.getElementById('d-mins').innerText = Math.floor((gap % hour) / minute).toString().padStart(2, '0');
+                document.getElementById('d-secs').innerText = Math.floor((gap % minute) / second).toString().padStart(2, '0');
+            }, 1000);
+        }
+
+        // --- MOBILE MENU FUNCTION ---
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('open');
+        }
+
+        // --- 2. UPDATED ADMIN & SECRET ACCESS LOGIC ---
+        let clickCount = 0;
+        
+        function handleSecretClick() {
+            clickCount++;
+            if(clickCount === 5) {
+                // NEW: Open custom modal instead of prompt
+                const modal = document.getElementById('admin-login-modal');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                document.getElementById('admin-pass-input').focus();
+                clickCount = 0;
+            }
+        }
+
+        function authenticateAdmin() {
+            const input = document.getElementById('admin-pass-input');
+            const errorMsg = document.getElementById('login-error');
+            
+            if(input.value === "admin") {
+                // Success
+                document.getElementById('admin-login-modal').classList.add('hidden');
+                document.getElementById('admin-login-modal').classList.remove('flex');
+                input.value = ""; // Clear password
+                errorMsg.classList.add('hidden');
+                toggleAdmin(); // Open actual console
+                showToast("ACCESS GRANTED: WELCOME ADMIN", "success");
+            } else {
+                // Fail
+                errorMsg.classList.remove('hidden');
+                input.classList.add('border-red-500', 'text-red-500');
+                showToast("ACCESS DENIED: INVALID KEY", "error");
+                setTimeout(() => {
+                     input.classList.remove('border-red-500', 'text-red-500');
+                }, 1000);
+            }
+        }
+        
+        function closeAdminLogin() {
+            document.getElementById('admin-login-modal').classList.add('hidden');
+            document.getElementById('admin-login-modal').classList.remove('flex');
+            document.getElementById('admin-pass-input').value = "";
+            document.getElementById('login-error').classList.add('hidden');
+        }
+
+        function toggleAdmin() {
+            const modal = document.getElementById('admin-modal');
+            if(modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            } else {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        // --- 3. LIVE VOTING LOGIC ---
+        const defaultVoteData = {
+            question: "Who will win the RoboWar Finals?",
+            opt1: "Team IronHide",
+            opt2: "Team Voltage",
+            votes1: 45,
+            votes2: 32
+        };
+        function getVoteData() { return JSON.parse(localStorage.getItem('impressions_vote_data')) || defaultVoteData; }
+        function saveVoteData(data) { localStorage.setItem('impressions_vote_data', JSON.stringify(data)); renderVoteUI(); }
+        function startNewVote() {
+            const q = document.getElementById('admin-vote-q').value;
+            const o1 = document.getElementById('admin-vote-opt1').value;
+            const o2 = document.getElementById('admin-vote-opt2').value;
+            if(!q || !o1 || !o2) { showToast("FILL ALL VOTE FIELDS", "warning"); return; }
+            saveVoteData({ question: q, opt1: o1, opt2: o2, votes1: 0, votes2: 0 });
+            showToast("NEW VOTE DEPLOYED", "success"); toggleAdmin();
+        }
+        
+        // --- ENHANCED VOTING LOGIC ---
+        function castVote(option, btnElement) {
+            // 1. Get current data
+            const data = getVoteData();
+            if(option === 1) data.votes1++; else data.votes2++;
+            saveVoteData(data);
+            
+            // 2. Trigger Confetti (Existing)
+            triggerConfetti();
+
+            // 3. NEW: Floating +1 Animation
+            // If btnElement isn't passed (from old calls), we find it manually
+            const btn = btnElement || (option === 1 ? document.querySelector('.vote-btn-blue') : document.querySelector('.vote-btn-pink'));
+            const rect = btn.getBoundingClientRect();
+            
+            const floatEl = document.createElement('div');
+            floatEl.className = 'float-plus-one font-orbitron';
+            floatEl.innerText = "+1";
+            floatEl.style.left = (rect.left + rect.width/2) + 'px';
+            floatEl.style.top = rect.top + 'px';
+            floatEl.style.color = option === 1 ? 'var(--neon-blue)' : 'var(--neon-pink)';
+            document.body.appendChild(floatEl);
+            
+            setTimeout(() => floatEl.remove(), 1000);
+
+            // 4. NEW: Cyber Toast Notification
+            showToast(`VOTE UPLINK ESTABLISHED: ${option === 1 ? 'TEAM A' : 'TEAM B'}`, 'success');
+        }
+        
+        // --- NEW: 3D TILT EFFECT FOR CARDS ---
+        document.querySelectorAll('.vote-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = ((y - centerY) / centerY) * -10; // Max 10deg rotation
+                const rotateY = ((x - centerX) / centerX) * 10;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
+            });
+        });
+
+        function triggerConfetti() {
+            var duration = 3 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
+            function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) { return clearInterval(interval); }
+                var particleCount = 50 * (timeLeft / duration);
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+        function renderVoteUI() {
+            const data = getVoteData();
+            const total = data.votes1 + data.votes2;
+            let p1 = 50, p2 = 50;
+            if(total > 0) { p1 = Math.round((data.votes1 / total) * 100); p2 = 100 - p1; }
+            document.getElementById('vote-question').innerText = data.question;
+            document.getElementById('lbl-opt1').innerText = data.opt1;
+            document.getElementById('lbl-opt2').innerText = data.opt2;
+            document.getElementById('perc-opt1').innerText = p1 + "%";
+            document.getElementById('perc-opt2').innerText = p2 + "%";
+            document.getElementById('bar-opt1').style.width = p1 + "%";
+            document.getElementById('bar-opt2').style.width = p2 + "%";
+        }
+        function loadVoteData() { renderVoteUI(); }
+
+        // --- 4. PREDICTIONS ORACLE LOGIC ---
+        function savePrediction() {
+            const enroll = document.getElementById('oracle-enroll').value.trim().toUpperCase();
+            const choice = document.getElementById('oracle-choice').value;
+            const resDiv = document.getElementById('prediction-result');
+            const resText = document.getElementById('pred-text');
+
+            if (!enroll || !choice) { showToast("MISSING DATA FIELDS", "warning"); return; }
+
+            if (localStorage.getItem('pred_' + enroll)) {
+                const prevChoice = localStorage.getItem('pred_' + enroll);
+                resDiv.classList.remove('hidden');
+                resText.innerHTML = `Welcome back <b>${enroll}</b>!<br>Your locked prediction: <b class="text-halogen">${prevChoice}</b><br><br>Status: <span class="text-yellow-400">PENDING RESULTS</span>`;
+            } else {
+                localStorage.setItem('pred_' + enroll, choice);
+                resDiv.classList.remove('hidden');
+                resText.innerHTML = `Prediction Locked for <b>${enroll}</b>!<br>Choice: <b class="text-halogen">${choice}</b><br>Come back after fest for results.`;
+                showToast("FUTURE SIGHT LOCKED", "success");
+            }
+        }
+
+        // --- 5. LIVE SCORES LOGIC ---
+        const scoreData = {
+            robo: [
+                { rank: "#1", team: "Cyborgs 62", score: "50 PTS" },
+                { rank: "#2", team: "Mecha 128", score: "45 PTS" },
+                { rank: "#3", team: "ElectroBot", score: "40 PTS" }
+            ],
+            cad: [
+                { rank: "#1", team: "Design_X", score: "98/100" },
+                { rank: "#2", team: "Blueprint_Squad", score: "95/100" },
+                { rank: "#3", team: "ArchiTechs", score: "92/100" }
+            ]
+        };
+        function switchScoreboard(category) {
+            const tableBody = document.getElementById('score-table-body');
+            const btnRobo = document.getElementById('btn-score-robo');
+            const btnCad = document.getElementById('btn-score-cad');
+            if (category === 'robo') {
+                btnRobo.className = "px-6 py-2 border border-neon-blue bg-neon-blue/10 text-white font-orbitron text-sm active-tab-btn transition";
+                btnCad.className = "px-6 py-2 border border-gray-600 text-gray-400 font-orbitron text-sm inactive-tab-btn transition";
+            } else {
+                btnCad.className = "px-6 py-2 border border-neon-blue bg-neon-blue/10 text-white font-orbitron text-sm active-tab-btn transition";
+                btnRobo.className = "px-6 py-2 border border-gray-600 text-gray-400 font-orbitron text-sm inactive-tab-btn transition";
+            }
+            const data = scoreData[category];
+            tableBody.innerHTML = "";
+            data.forEach(row => {
+                tableBody.innerHTML += `<tr class="border-b border-white/5 hover:bg-white/5"><td class="p-3 text-accent">${row.rank}</td><td class="p-3 font-bold">${row.team}</td><td class="p-3 text-right">${row.score}</td></tr>`;
+            });
+        }
+
+        // --- 6. ANNOUNCEMENT FEED LOGIC (INSTAGRAM STYLE) ---
+        const defaultPosts = [
+            { id: 1, text: "Welcome to Impressions '26! The gates are now OPEN. Head to the registration desk.", img: "https://i.pinimg.com/736x/5b/c0/02/5bc002df37a2c4e89cd45e3f11f93d12.jpg", time: "10:00 AM", likes: 124, comments: [] }
+        ];
+        function getPosts() { return JSON.parse(localStorage.getItem('impressions_posts')) || defaultPosts; }
+        function savePosts(posts) { localStorage.setItem('impressions_posts', JSON.stringify(posts)); renderPosts(); }
+        function createPost() {
+            const text = document.getElementById('admin-post-text').value;
+            const img = document.getElementById('admin-post-img').value;
+            if(!text) { showToast("WRITE SOMETHING", "warning"); return; }
+            const posts = getPosts();
+            const newPost = { id: Date.now(), text: text, img: img, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}), likes: 0, comments: [] };
+            posts.unshift(newPost); savePosts(posts); showToast("POST TRANSMITTED", "success"); toggleAdmin();
+        }
+        function likePost(id, event) { 
+            event.stopPropagation(); 
+            const posts = getPosts(); 
+            const post = posts.find(p => p.id === id); 
+            
+            if(post) { 
+                post.likes++; 
+                savePosts(posts); // This calls renderPosts() which updates the UI
+                
+                // If you want immediate feedback before redraw (optional):
+                const btnIcon = event.target.querySelector('i') || event.target;
+                if(btnIcon.classList.contains('fa-heart')) {
+                    btnIcon.classList.remove('far', 'text-white');
+                    btnIcon.classList.add('fas', 'text-red-500');
+                }
+            } 
+        }
+        function addComment(id, event) { event.stopPropagation(); const c = prompt("Add your comment:"); if(c) { const posts = getPosts(); const post = posts.find(p => p.id === id); if(post) { post.comments.push(c); savePosts(posts); } } }
+        function openPostModal(id) {
+            const posts = getPosts();
+            const post = posts.find(p => p.id === id);
+            if(!post) return;
+            const imgHTML = post.img ? `<img src="${post.img}" class="w-full max-h-[60vh] object-contain bg-black mb-4">` : "";
+            const commentsHTML = post.comments.map(c => `<div class="bg-white/5 p-2 rounded mb-2 text-sm border-l-2 border-accent text-gray-300">"${c}"</div>`).join('');
+            const content = `<div class="h-full flex flex-col p-6">${imgHTML}<div class="flex-1 overflow-y-auto"><div class="flex justify-between items-center mb-4"><span class="text-neon-green font-bold font-orbitron text-sm tracking-widest">OFFICIAL TRANSMISSION</span><span class="text-gray-400 font-mono text-xs">${post.time}</span></div><p class="text-white font-body text-xl mb-6 leading-relaxed">${post.text}</p><div class="border-t border-white/20 pt-4"><div class="flex items-center gap-6 mb-6"><div class="text-neon-pink font-bold"><i class="fas fa-heart mr-2"></i> ${post.likes} Likes</div><div class="text-neon-blue font-bold"><i class="fas fa-comment mr-2"></i> ${post.comments.length} Comments</div></div><h4 class="text-accent font-orbitron mb-3">COMMENTS_LOG</h4><div class="space-y-2">${commentsHTML.length ? commentsHTML : '<div class="text-gray-600 italic">No comments yet.</div>'}</div></div></div></div>`;
+            document.getElementById('post-modal-content').innerHTML = content;
+            document.getElementById('post-view-modal').classList.remove('hidden');
+            document.getElementById('post-view-modal').classList.add('flex');
+        }
+        function closePostModal() { document.getElementById('post-view-modal').classList.add('hidden'); document.getElementById('post-view-modal').classList.remove('flex'); }
+
+        function renderPosts() {
+            const posts = getPosts();
+            const container = document.getElementById('posts-container');
+            
+            // Switch container layout from Masonry to Single Column Feed
+            container.classList.remove('masonry-col', 'max-w-6xl');
+            container.classList.add('max-w-md', 'flex', 'flex-col', 'gap-8'); 
+            
+            container.innerHTML = "";
+            
+            posts.forEach(post => {
+                // Mock Data for "Instagram" feel
+                const username = "jiit_impressions";
+                const avatar = "https://i.pinimg.com/736x/5b/c0/02/5bc002df37a2c4e89cd45e3f11f93d12.jpg";
+                const location = "JIIT Noida Sector-128";
+                
+                // Handle Image vs Text-only posts
+                let mediaContent = "";
+                if (post.img) {
+                    mediaContent = `<img src="${post.img}" class="w-full object-cover aspect-square bg-gray-900 cursor-pointer" onclick="openPostModal(${post.id})" ondblclick="likePost(${post.id}, event)">`;
+                } else {
+                    // Create a "Text-as-Image" background for posts without images
+                    mediaContent = `
+                        <div class="w-full aspect-square bg-gradient-to-br from-gray-900 to-black flex items-center justify-center p-8 text-center border-t border-b border-gray-800 cursor-pointer" onclick="openPostModal(${post.id})" ondblclick="likePost(${post.id}, event)">
+                            <p class="font-orbitron text-xl text-white tracking-wider leading-relaxed">${post.text}</p>
+                        </div>`;
+                }
+
+                // Check if liked for heart icon state
+                const heartIcon = post.likes > 0 ? "fas fa-heart text-red-500" : "far fa-heart text-white hover:text-gray-400";
+
+                const html = `
+                <div class="insta-card bg-black border border-gray-800 rounded-lg overflow-hidden w-full relative group">
+                    
+                    <div class="flex items-center justify-between p-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600 p-[2px]">
+                                <img src="${avatar}" class="w-full h-full rounded-full border-2 border-black object-cover">
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-white text-sm font-bold flex items-center gap-1">
+                                    ${username} <i class="fas fa-check-circle text-blue-500 text-[10px]"></i>
+                                </span>
+                                <span class="text-gray-500 text-[10px]">${location}</span>
+                            </div>
+                        </div>
+                        <button class="text-white hover:text-gray-400"><i class="fas fa-ellipsis-h"></i></button>
+                    </div>
+
+                    <div class="relative">
+                        ${mediaContent}
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 transition-opacity duration-300 heart-overlay">
+                            <i class="fas fa-heart text-white text-6xl drop-shadow-lg"></i>
+                        </div>
+                    </div>
+
+                    <div class="p-3">
+                        <div class="flex justify-between mb-3 text-2xl text-white">
+                            <div class="flex gap-4">
+                                <button onclick="likePost(${post.id}, event)" class="transform active:scale-125 transition-transform duration-200">
+                                    <i class="${heartIcon}"></i>
+                                </button>
+                                <button onclick="addComment(${post.id}, event)" class="transform active:scale-90 transition">
+                                    <i class="far fa-comment hover:text-gray-400"></i>
+                                </button>
+                                <button class="transform active:scale-90 transition">
+                                    <i class="far fa-paper-plane hover:text-gray-400"></i>
+                                </button>
+                            </div>
+                            <button><i class="far fa-bookmark hover:text-gray-400"></i></button>
+                        </div>
+
+                        <div class="text-white text-sm font-bold mb-2">
+                            ${post.likes} likes
+                        </div>
+
+                        <div class="text-white text-sm mb-2">
+                            <span class="font-bold mr-2">${username}</span>
+                            <span class="font-body text-gray-200">${post.text}</span>
+                        </div>
+
+                        ${post.comments.length > 0 ? `
+                            <div class="text-gray-500 text-sm cursor-pointer mb-1" onclick="openPostModal(${post.id})">
+                                View all ${post.comments.length} comments
+                            </div>
+                            ${post.comments.slice(-1).map(c => `
+                                <div class="text-gray-300 text-xs flex gap-2">
+                                    <span class="font-bold text-white">student_xx</span> ${c}
+                                </div>
+                            `).join('')}
+                        ` : ''}
+
+                        <div class="text-gray-500 text-[10px] uppercase tracking-wide mt-2">
+                            ${post.time} • VIA HOLO FEED
+                        </div>
+                    </div>
+                </div>`;
+                
+                container.innerHTML += html;
+            });
+        }
+        function loadPosts() { renderPosts(); }
+
+        // --- 7. MEMORIES & SQUADS ---
+        function loadMemories() {
+            const memImgs = [
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_5ICnQfKU_4iTA_VEesTLPxomtEoIRYE2VQ&s", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuaDPJlyLEWLhYzJwCZAn9EhPAxzurdOoKcw&s", "https://scontent.fdel92-1.fna.fbcdn.net/v/t39.30808-6/495448873_1327531322306755_1389162264776016832_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=f727a1&_nc_ohc=o4BOj2VLqUkQ7kNvwFgY2y5&_nc_oc=AdnGu0k4EMEJlX3jvKFtU_38tkyj3XxhO1b9hnrCR1tGRDrmSTA-cz23Xy7wOnCGYB0&_nc_zt=23&_nc_ht=scontent.fdel92-1.fna&_nc_gid=gyduT4VTw0IS4f69E7aMSA&oh=00_AfqqYYElSmNwZQTcCInRTLRNsb7M4uQ2PbYXZTjlpR6IOQ&oe=6979448A", "https://scontent.fdel92-1.fna.fbcdn.net/v/t39.30808-6/495585671_1327529028973651_829456025922345643_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=f727a1&_nc_ohc=bTjpMKBKNc4Q7kNvwHK-_IA&_nc_oc=AdnpLHvBcwqyhHhaVOxPDVQZ000R_6xMU8JDdVEdLi4aeKk0SP89LSVup2-Eq-q-P60&_nc_zt=23&_nc_ht=scontent.fdel92-1.fna&_nc_gid=9vLTJyVDyLzSnINg4XAe-Q&oh=00_Afo69V8KqyUWUgZGXzuqtpw_qNNjIlAr2hCO4RhyEyxQHw&oe=69794FA1", "https://scontent.fdel92-1.fna.fbcdn.net/v/t39.30808-6/496254511_1327530218973532_1982994847496736133_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=f727a1&_nc_ohc=2YUVGZFqIzwQ7kNvwHPgSQI&_nc_oc=AdkKhU2dbFKBgRT3ZO7FsU85BU6r1I6yeZsl0yXAAB6OmSyRtKvK_oDn85VhOHSsGPQ&_nc_zt=23&_nc_ht=scontent.fdel92-1.fna&_nc_gid=RbQFq5v-ZhuPgtKu4DpGrA&oh=00_AfrIQZu8lDgvGmknBJkO25yjbqywIUJUChs0R2ce-3cSZA&oe=6979600C",
+                "https://scontent.fdel92-1.fna.fbcdn.net/v/t39.30808-6/495565383_1327531015640119_4507089479862111400_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=f727a1&_nc_ohc=VoFGxwo8IuQQ7kNvwEwaUnm&_nc_oc=AdkdiEUJrCmkBg07DT7CXdHlHktKSbSo-kqbr4fKAyPXKE8FebkV_QlZVbhbSVyzkPM&_nc_zt=23&_nc_ht=scontent.fdel92-1.fna&_nc_gid=PiPiQcsGt6drYGGCHso2dw&oh=00_AfrZzZ7zFC1Pd45nlcEeD8McMr-xdLTQGapHuSp_zXAL4w&oe=69795367", "https://scontent.fdel92-1.fna.fbcdn.net/v/t39.30808-6/495733779_1327530832306804_5799664208487109260_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=f727a1&_nc_ohc=uuqVSUtwfNwQ7kNvwFacEfB&_nc_oc=Adni7lsDXhSvSI2-MZj6_PFllY2xSel3vGYP-o_ljKD2F3uh1Z4N7_FPRvz1I3UK6qI&_nc_zt=23&_nc_ht=scontent.fdel92-1.fna&_nc_gid=ZshqBqOBJ3cHSKf-VW3A7g&oh=00_AfoCFEkp3JN6pADIIOANqLPkgIt4kSdZcF_DjwWXI5vhNw&oe=69796714", "https://scontent.fdel92-1.fna.fbcdn.net/v/t39.30808-6/496130067_1327529428973611_51837768558160916_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=f727a1&_nc_ohc=uDyysu5vX74Q7kNvwEUsn44&_nc_oc=AdkjY7AeX6OX89eUpBKJyvJ6LvP4lWUDDjdpUF-YDEBhIEJ1tkrX3jjJZ-IhlvzDhG0&_nc_zt=23&_nc_ht=scontent.fdel92-1.fna&_nc_gid=5S29FSAGiDhv1aO64aInrQ&oh=00_AfrzMmriwCJhthQ0D6Qf54BjZw17qoHDZtJDdrTS9T4SRA&oe=697944B5", "https://scontent.fdel92-1.fna.fbcdn.net/v/t39.30808-6/495364247_1327531425640078_2257842384522723157_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=f727a1&_nc_ohc=ioQX_HeUKagQ7kNvwF2wIpW&_nc_oc=AdmxwmIca-ELzdWZF0m8PtUBqfIDYzdr456yifuuDmHyl4r49pIqQdrtMNf4RFhgT6U&_nc_zt=23&_nc_ht=scontent.fdel92-1.fna&_nc_gid=fxeaIJTMi-UUmxC8OH7jOw&oh=00_AfqI7y4TUjmSHKP121iK5vsT6jW4x_NzL9SDyao6XYTANg&oe=69793657",
+                "https://scontent.fdel92-1.fna.fbcdn.net/v/t39.30808-6/495388509_1327533355639885_1830383083162066057_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=f727a1&_nc_ohc=9wiqVxX_yvcQ7kNvwEUUMMs&_nc_oc=AdkTh7OiqjII0Juypxn13QenhGvbysj6zaZ2_S8xSQot0K_cLW8tU7TqvtIix2GC8E0&_nc_zt=23&_nc_ht=scontent.fdel92-1.fna&_nc_gid=wxHwlRfKQj4Hv9HRw8QqHw&oh=00_AfoQLaDDqTyi81ReJpT6T78YNYZ8x7siYvoAIe7yi1rD2w&oe=69794BB7", "https://scontent.fdel92-1.fna.fbcdn.net/v/t39.30808-6/495000233_1327531202306767_2401647326474780495_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=f727a1&_nc_ohc=GOVvqu5mwpwQ7kNvwESWyMl&_nc_oc=AdkTGPLyUjwY7bDlxv_wwWronf3dy1AUAz0v-NfdAD-gxRGWIa6IEod36XkRksIpgf8&_nc_zt=23&_nc_ht=scontent.fdel92-1.fna&_nc_gid=KW93sLUbG1mOG6dZfICp-w&oh=00_AfoCdEqiDCKCgFYt50R1JzE09t3fxE4HQz2cmM1TQYWXVA&oe=6979691F", "https://scontent.fdel92-1.fna.fbcdn.net/v/t39.30808-6/499224737_1333351241724763_8818625831430534163_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=f727a1&_nc_ohc=qcCNEemXqeUQ7kNvwGeL7cS&_nc_oc=Adl1z0GtoXleQY94JcOzbEh1x6TZXM6-diCbtnYvYlsGfkmg3NZXQ-RPnwiO_V2LWog&_nc_zt=23&_nc_ht=scontent.fdel92-1.fna&_nc_gid=afGhBI6GOin0J1VpKbEjXA&oh=00_AfrSwhhMomUA7-CMNssXXUvXRCWjxwUwM7Mfv6Z97QHwkg&oe=69794E62",
+                "https://scontent.fdel92-1.fna.fbcdn.net/v/t39.30808-6/495690901_1333353555057865_1099263498191506519_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=f727a1&_nc_ohc=yPHbI0nQZ5QQ7kNvwGt017o&_nc_oc=AdkvkdarXA8_4vXCHQRzLYI_8ifLjp3ypMGsZiqbD04NXW39YqUZOfCLMj1eqswT4oU&_nc_zt=23&_nc_ht=scontent.fdel92-1.fna&_nc_gid=8lC5FxR_7skZutgOTlZlFg&oh=00_AfqxolwIEaydZUwxQ-L1Wv8Ck27vpMuARL1-DvvjYVZjjA&oe=697967B9", "https://scontent.fdel92-1.fna.fbcdn.net/v/t39.30808-6/497290523_1333350011724886_8313227425826403279_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=f727a1&_nc_ohc=Bs_ijcvGIsYQ7kNvwEBDSlM&_nc_oc=Adl2rD3UGkgSaO63P5R_ifYcsE7jPqawTWSQkBH1IzKEt_w16ALRmoWhSM64_G8qS9c&_nc_zt=23&_nc_ht=scontent.fdel92-1.fna&_nc_gid=X8ANTV_UNDO94Ro8vFaYew&oh=00_AfqZD-joLb_lf1Rt2FiBLb1FkHSfN_T5dX7V3kJrM59M0w&oe=69793772", "https://scontent.fdel92-1.fna.fbcdn.net/v/t39.30808-6/495280100_1327532988973255_4312181032158429002_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=f727a1&_nc_ohc=obGudSmo4N0Q7kNvwECi9R7&_nc_oc=AdkfYidRAR5Bdvd40Z3OH4DgoDmk1DVFF9UMdfYBW5l_ibXiWW7c28KpYkNvTc4YPXg&_nc_zt=23&_nc_ht=scontent.fdel92-1.fna&_nc_gid=Pq1ugBdYqZIvFm3Pd6Otjw&oh=00_AfoJzgkTVQPYBssIQfkJoTRd3MEOi5RdERpKX48Zya4gPQ&oe=69793D36",
+                "https://i.pinimg.com/736x/46/41/8a/46418ac451a510c1212c55a92f3a7677.jpg", "https://i.pinimg.com/736x/06/17/17/061717f2f1e88d60ed67e1d783a82b8f.jpg"
+            ];
+            const memGrid = document.getElementById('photo-grid');
+            memGrid.innerHTML = ""; 
+            memImgs.forEach((url, index) => {
+                const rot = Math.floor(Math.random() * 10) - 5;
+                memGrid.innerHTML += `<div class="polaroid reveal" style="transform: rotate(${rot}deg)"><div class="washi-tape"></div><img src="${url}" loading="lazy" alt="Memory ${index + 1}"><div class="handwriting">Memory #${index+1}</div></div>`;
+            });
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }
+
+        // --- 8. CHAT & UTILS (SECURE MOCK VERSION) ---
+        async function handleUserChat() {
+            const input = document.getElementById('chat-input');
+            const chatBody = document.getElementById('chat-body');
+            const userText = input.value.trim();
+            
+            if (!userText) return;
+
+            // 1. Add User Message
+            chatBody.innerHTML += `<div class='text-right mb-2 text-white bg-primary/20 p-2 rounded border border-primary/30 font-mono text-sm'>${userText}</div>`;
+            input.value = ''; 
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            // 2. Add Loading Indicator
+            const loadingId = 'loading-' + Date.now();
+            chatBody.innerHTML += `<div id="${loadingId}" class='text-left mb-2 text-accent bg-white/10 p-2 rounded animate-pulse font-mono text-xs'>Analyzing...</div>`;
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            // 3. Simulate AI Delay (No API Key needed)
+            setTimeout(() => {
+                document.getElementById(loadingId).remove();
+                
+                // Simple keyword matching logic for the demo
+                let response = "I am processed by the JIIT Server. Ask me about the Schedule.";
+                const lowerText = userText.toLowerCase();
+
+                if(lowerText.includes('schedule') || lowerText.includes('when')) response = "Day 1 starts Feb 27 at 10:00 HRS. Don't miss the Robo Soccer!";
+                else if(lowerText.includes('register')) response = "Registrations are open! Check the 'Join Fleet' button.";
+                else if(lowerText.includes('guest')) response = "We have a surprise celebrity guest for the Star Night!";
+                else if(lowerText.includes('food')) response = "Food stalls are located near the Audi block.";
+                else if(lowerText.includes('hello') || lowerText.includes('hi')) response = "Greetings, Cadet. Ready for Impressions '26?";
+
+                chatBody.innerHTML += `<div class='text-left mb-2 text-accent bg-white/10 p-2 rounded border border-accent/30 font-mono text-sm'>${response}</div>`;
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 1000);
+        }
+
+        function switchClubTab(tab) {
+            document.querySelectorAll('.domain-container').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.club-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('domain-' + tab).classList.add('active');
+            document.querySelector(`.btn-${tab}`).classList.add('active');
+        }
+        
+        function scrollSquads(direction) {
+            const container = document.getElementById('squads-wrapper');
+            const scrollAmount = 300; 
+            if (direction === 'left') { container.scrollLeft -= scrollAmount; } else { container.scrollLeft += scrollAmount; }
+        }
+
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('live-clock').innerText = now.toLocaleTimeString('en-US', {hour12:false});
+            const h = now.getHours();
+            document.getElementById('active-event-display').innerText = (h >= 10 && h < 16) ? "FEST IS LIVE!" : "NO ACTIVE EVENT";
+        }, 1000);
+
+        // --- 9. QUOTES ---
+        const quotes = ["Sleep is for the weak.", "Caffeine is a food group.", "Memories are timeless.", "Work hard, party harder."];
+        setInterval(() => {
+             const el = document.getElementById('daily-quote');
+             el.style.opacity = 0;
+             setTimeout(() => { el.innerText = `"${quotes[Math.floor(Math.random() * quotes.length)]}"`; el.style.opacity = 1; }, 300);
+        }, 6000);
+
+        // --- 10. NEW: REGISTRATION LOGIC WITH TABS ---
+        function switchRegType(type) {
+            // Buttons
+            const btnIndiv = document.getElementById('tab-indiv');
+            const btnGroup = document.getElementById('tab-group');
+            // Forms
+            const formIndiv = document.getElementById('reg-form-indiv');
+            const formGroup = document.getElementById('reg-form-group');
+
+            if(type === 'indiv') {
+                btnIndiv.classList.add('active-tab-btn', 'border-accent', 'bg-accent/20', 'text-white');
+                btnIndiv.classList.remove('inactive-tab-btn', 'border-white/20', 'text-gray-400');
+                
+                btnGroup.classList.remove('active-tab-btn', 'border-accent', 'bg-accent/20', 'text-white');
+                btnGroup.classList.add('inactive-tab-btn', 'border-white/20', 'text-gray-400');
+                
+                formIndiv.classList.remove('hidden');
+                formGroup.classList.add('hidden');
+            } else {
+                btnGroup.classList.add('active-tab-btn', 'border-accent', 'bg-accent/20', 'text-white');
+                btnGroup.classList.remove('inactive-tab-btn', 'border-white/20', 'text-gray-400');
+                
+                btnIndiv.classList.remove('active-tab-btn', 'border-accent', 'bg-accent/20', 'text-white');
+                btnIndiv.classList.add('inactive-tab-btn', 'border-white/20', 'text-gray-400');
+                
+                formGroup.classList.remove('hidden');
+                formIndiv.classList.add('hidden');
+            }
+        }
+
+        // --- DYNAMIC MEMBER LOGIC ---
+        function addMemberField() {
+            const container = document.getElementById('members-container');
+            const count = container.querySelectorAll('.member-row').length + 2; // Start from Member 2
+            
+            if(count > 5) {
+                showToast("MAX SQUAD SIZE REACHED (5)", "warning");
+                return;
+            }
+
+            const div = document.createElement('div');
+            div.className = 'flex gap-2 member-row fade-in';
+            div.innerHTML = `<input type="text" class="w-full bg-white/5 border border-white/10 p-2 text-white font-mono text-sm focus:border-white/50 outline-none" placeholder="Member ${count} Name"><button type="button" onclick="this.parentElement.remove()" class="text-red-500 hover:text-white px-2">✕</button>`;
+            
+            container.appendChild(div);
+        }
+
+        function handleRegistration(e) {
+            e.preventDefault();
+            const name = document.getElementById('reg-name').value;
+            const enroll = document.getElementById('reg-enroll').value;
+            simulateSubmit(e.target, name, enroll, "CADET");
+        }
+
+        function handleGroupRegistration(e) {
+            e.preventDefault();
+            const teamName = document.getElementById('group-name').value;
+            const leaderName = document.getElementById('group-leader').value;
+            simulateSubmit(e.target, leaderName, teamName, "SQUAD");
+        }
+
+        function simulateSubmit(form, name, id, type) {
+            const btn = form.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> UPLOADING TO MAINFRAME...`;
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.innerHTML = `<i class="fas fa-check"></i> UPLINK SECURE`;
+                btn.classList.add('bg-green-600', 'border-green-400');
+                
+                // Auto-fill pass if it's individual, else just alert
+                if(type === "CADET") {
+                     document.getElementById('pass-name').value = name;
+                     document.getElementById('pass-id').value = id;
+                }
+                
+                triggerConfetti();
+                
+                if(type === "CADET") {
+                    showToast(`WELCOME, CADET ${name.toUpperCase()}`, "success");
+                    alert(`Registration ID: IMP-${Math.floor(Math.random()*10000)}\n\nProceed to 'My Pass' section.`);
+                } else {
+                    showToast(`SQUAD DEPLOYED: ${id.toUpperCase()}`, "success");
+                    alert(`SQUAD LEADER: ${name.toUpperCase()}\n\nDeployment coordinates sent to device.`);
+                }
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    btn.classList.remove('bg-green-600', 'border-green-400');
+                    form.reset();
+                    // Reset dynamic fields if group form
+                    if(type === "SQUAD") {
+                         const container = document.getElementById('members-container');
+                         // Remove all dynamic rows (keep label and first row if hardcoded, but here we rebuild)
+                         // Actually simple reset clears inputs, we might want to remove extra member rows manually
+                         const rows = container.querySelectorAll('.member-row');
+                         for(let i=1; i<rows.length; i++) rows[i].remove(); // Keep first one
+                    }
+                }, 3000);
+            }, 1500);
+        }
+
+        /* --- 11. PASS GENERATOR LOGIC --- */
+        function generatePass() {
+            const name = document.getElementById('pass-name').value;
+            const id = document.getElementById('pass-id').value;
+            const detailsDiv = document.getElementById('pass-details');
+            const qrContainer = document.getElementById('qrcode-container');
+
+            if(!name || !id) {
+                showToast("PLEASE ENTER CREDENTIALS", "warning");
+                return;
+            }
+
+            // 1. Update Text
+            document.getElementById('card-name').innerText = name.toUpperCase();
+            document.getElementById('card-id').innerText = id.toUpperCase();
+            
+            // 2. Remove Blur
+            detailsDiv.classList.remove('opacity-50', 'blur-sm');
+            
+            // 3. Generate QR
+            qrContainer.innerHTML = ""; // Clear old QR
+            new QRCode(qrContainer, {
+                text: `NAME:${name}|ID:${id}|ACCESS:GRANTED`,
+                width: 100,
+                height: 100,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+            
+            // 4. Visual Feedback
+            const card = document.getElementById('id-card');
+            card.style.borderColor = "#00f7ff";
+            card.style.boxShadow = "0 0 80px rgba(0, 247, 255, 0.3)";
+            showToast("HOLO PASS GENERATED", "success");
+        }
+        
+        function toggleChat() { document.getElementById('chat-window').style.display = document.getElementById('chat-window').style.display==='flex'?'none':'flex'; }
+        function toggleSOS() { const m = document.getElementById('sos-modal'); m.classList.toggle('hidden'); m.classList.toggle('flex'); }
+        function shareLocation() { if(navigator.geolocation) navigator.geolocation.getCurrentPosition(p => window.open(`https://wa.me/917428633120?text=HELP!%20Loc:${p.coords.latitude},${p.coords.longitude}`)); }
+
+        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('active'); }); });
+    </script>
+</body>
+</html>
